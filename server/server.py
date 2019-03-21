@@ -1,5 +1,4 @@
 from flask import *
-from client import Client
 from uuid import uuid4
 import os
 
@@ -21,8 +20,7 @@ def v0_ping():
 @app.route(app.prefix + '/conn/init/<ip>/<int:port>')
 def v0_conn_init(ip, port):
     client_id = str(uuid4())
-    session[client_id] = Client(ip, port, client_id)
-
+    session[client_id] = {"ip": ip, "port": port, "client_id": client_id}
     return Response(
         '{"status": "OK", "message": "client registered", "client_id": "%s"}' %
         client_id,
