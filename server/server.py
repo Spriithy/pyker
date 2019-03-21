@@ -16,7 +16,7 @@ def v0():
 def v0_ping():
     return
 
-
+"""
 @app.route(app.prefix + '/conn/init/<ip>/<int:port>')
 def v0_conn_init(ip, port):
     client_id = str(uuid4())
@@ -24,6 +24,16 @@ def v0_conn_init(ip, port):
     return Response(
         '{"status": "OK", "message": "client registered", "client_id": "%s"}' %
         client_id,
+        mimetype='text/json')
+"""
+
+@app.route(app.prefix + '/conn/init/<ip>/<int:port>/<name>')
+def v0_conn_init(ip, port, name):
+    client_id = str(uuid4())
+    session[client_id] = {"ip": ip, "port": port, "client_id": client_id, "name": name}
+    return Response(
+        '{"status": "OK", "message": "client registered", "client_id": "%s","name":"%s"}' %
+        (client_id,name),
         mimetype='text/json')
 
 
