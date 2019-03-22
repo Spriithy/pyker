@@ -14,17 +14,13 @@ class ApiCalls(object):
         self.addrServ= "0.0.0.0"
         self.prefix="http://0.0.0.0:5000/v0"
 
-    def set_addr_Serv(self,addr):
+    def set_addr_Serv(self,addr,username):
         self.addrServ=addr
         self.prefix = "http://%s:5000/v0"%addr
-        return self.pingServ()
+        return self.connexion_Init(username)
 
-    def pingServ(self):
-        return (requests.get("%s/conn/ping"%(self.prefix))).json()
-
-    def connexion(self,name):
-        return (requests.get("%s/conn/init/%s/10/%s"% (self.prefix,self.IPAddr,name))).json()
-
+    def connexion_Init(self,username):
+        return((requests.post("%s/conn/init"% (self.prefix),data={"user.name":"%s"%username})).json())
 
 instance_Server = ApiCalls()
 

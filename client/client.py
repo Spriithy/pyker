@@ -8,22 +8,21 @@ import UserClass as us
 import InterfaceClass as itc
 #import threading
 from ApiCalls import instance_Server as api
+from UserClass import user as user
 
 def thread(timeStart):
     print(timeStart)
 
-print(api.IPAddr)
-print(api.hostname)
-exit(0)
 it=itc.Interface
 itc.clear()
 print("Welcome to Pyker BB")
-while(it.set_Addr_Serv()!=True):
-    pass
+user.ID_=it.set_Addr_Serv()
 
+""""
 user=us.UserClass(it.print_Connexion())
 it.print_Clear_WhoAmI(user.whoAmI())
 it.print_Interface(user.whoAmI())
+"""
 
 """
 me = us.UserClass()
@@ -38,6 +37,6 @@ me.id_Hash=response["client_id"]
     thread(time.time())
     threading.Thread(target=ping,args=(hostname,)).start()
 """
-#print_Interface()
+
 input("END")
 exit(0)
