@@ -1,9 +1,3 @@
-from uuid import uuid4
-import os
-import http
-import time
-import requests
-import json
 from ApiCalls import instance_Server as api
 
 class UserClass():
@@ -24,4 +18,6 @@ class UserClass():
             return False
         return True if (api.push_Message(message,to)["status"]=="OK") else False
 
+    def ping_Serv(self):
+        api.ping_Serv()
 user = UserClass()
