@@ -17,8 +17,8 @@ def user_table(user):
     return None
 
 
-@bp.route('/get/tables')
-def get_tables():
+@bp.route('/list')
+def list_tables():
     return Response(
         '{"status": "OK", "message": "", "payload.type": "table.list", "table.list": '
         + json.dumps(list(filter(lambda t: tables[t]['table.name'],
