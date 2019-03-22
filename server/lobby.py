@@ -15,6 +15,16 @@ messages = [{
 }]
 
 
+def broadcast(message, dest='lobby'):
+    messages.append({
+        "id": len(messages),
+        "from": "server",
+        "to": dest,
+        "date": datetime.datetime.now().strftime('%H:%M:%S'),
+        "content": message,
+    })
+
+
 @bp.route('/pull/messages')
 def pull_messages():
     """
@@ -38,6 +48,24 @@ def pull_messages():
             user, messages[start:]))
     return Response(
         '{"status":"OK", "message":"", "payload.type": "lobby.messages", "lobby.messages": '
+        + json.dumps(local_messages) + '}',
+        mimetype='text/json')
+
+
+@bp.route('/pull/whispers/<from_user>')
+def pull_whispers(from_user):
+    if session['state'] is not state.IN_LOBBY:
+        return Response(
+            '{"status": "ERROR", "message": "user not in lobby"}',
+            mimetype='text/json')
+
+    user = session['user.name'] + '#' + session['user.id']
+    local_messages = list(
+        filter(
+            lambda m: (m['from'] == user or m['to'] == from_user) and (m[
+                'to'] == from_user or m['from'] == user), messages))
+    return Response(
+        '{"status":"OK", "message":"", "payload.type": "whispers.messages", "whispers.messages": '
         + json.dumps(local_messages) + '}',
         mimetype='text/json')
 
