@@ -14,9 +14,4 @@ def ping():
             return Response(
                 '{"status": "OK", "message":"", "action": "lobby.join"}',
                 mimetype='text/json')
-        elif session['state'] == IN_LOBBY:
-            return redirect(
-                url_for(
-                    'lobby.get_messages',
-                    start=request.form.get('start', 0, type=int)))
     return ''

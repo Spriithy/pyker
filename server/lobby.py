@@ -1,5 +1,6 @@
 from flask import *
 import json
+
 import datetime
 import state
 
@@ -14,9 +15,11 @@ messages = [{
 }]
 
 
-@bp.route('/get/messages')
-def get_messages():
+@bp.route('/pull/messages')
+def pull_messages():
     start = 0
+    print(request.args)
+    print(request.form)
     if request.args.get('start', None):
         start = int(request.args.get('start'))
     return Response(
@@ -40,7 +43,7 @@ def push_message():
 
     message = {
         "id": len(messages),
-        "from": session['user.name'],
+        "from": session['user.name'] + '#' + session['user.id'],
         "to": request.form.get('message.to', 'lobby'),
         "date": datetime.datetime.now().strftime('%H:%M:%S'),
         "content": content,
