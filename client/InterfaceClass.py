@@ -16,18 +16,18 @@ class Interface():
         print("")
 
     @staticmethod
-    def set_Addr_Serv():
+    def set_Addr_Serv(address):
         response=False
         while (response==False):
-            address = input("Entrez l'adresse du serveur : ")
             username= input("Votre username : ")
             username = "Anonymous" if len(username)==0 else username 
             try :
                 response = api.set_addr_Serv(address,username)
                 print("Connexion établie avec le serveur")
-                return response #ID
+                return response["user.name"],response["user.id"]
             except :
                 print("Server not found")
+                exit(0)
 
     @staticmethod
     def print_Clear_WhoAmI(name):
@@ -51,7 +51,7 @@ class Interface():
     def standard_Print(message,cleared=None, whoAmI=None):
         (clear()) if cleared!=None else ""
         (Interface.print_Clear_WhoAmI(whoAmI)) if whoAmI!=None else ""
-        print("\n\n*********************************\n\n")
+        print("\n*********************************\n")
         print(message)
-        print("\n\n*********************************\n\n")
+        print("\n*********************************\n")
     
