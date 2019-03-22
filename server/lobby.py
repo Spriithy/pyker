@@ -18,17 +18,20 @@ messages = [{
 @bp.route('/pull/messages')
 def pull_messages():
     start = 0
-    print(request.args)
-    print(request.form)
     if request.args.get('start', None):
         start = int(request.args.get('start'))
+    user = session['user.name'] + '#' + session['user.id']
+    local_messages = list(
+        filter(
+            lambda m: m['from'] == user or m['to'] == 'lobby' or m['to'] ==
+            user, messages[start:]))
     return Response(
         '{"status":"OK", "message":"", "payload.type": "lobby.messages", "lobby.messages": '
-        + json.dumps(messages[start:]) + '}',
+        + json.dumps(local_messages) + '}',
         mimetype='text/json')
 
 
-@bp.route('push/message', methods=['POST'])
+@bp.route('/push/message', methods=['POST'])
 def push_message():
     if session['state'] is not state.IN_LOBBY:
         return Response(
