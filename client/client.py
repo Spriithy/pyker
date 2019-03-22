@@ -5,23 +5,25 @@ import time
 import requests
 import json
 import UserClass as us
-import InterfaceClass as it
+import InterfaceClass as itc
 #import threading
-
-def clear():
-    os.system("clear")
-
-
+from ApiCalls import instance_Server as api
 def thread(timeStart):
     print(timeStart)
 
-
-it=it.Interface
-clear()
+print(api.IPAddr)
+print(api.hostname)
+exit(0)
+it=itc.Interface
+itc.clear()
 print("Welcome to Pyker BB")
+while(it.set_Addr_Serv()!=True):
+    pass
+
 user=us.UserClass(it.print_Connexion())
 it.print_Clear_WhoAmI(user.whoAmI())
 it.print_Interface(user.whoAmI())
+
 """
 me = us.UserClass()
 me.cleared_whoAmI()

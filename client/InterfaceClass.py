@@ -4,6 +4,7 @@ import http
 import time
 import requests
 import json
+from ApiCalls import instance_Server as api
 
 def clear():
     os.system("clear")
@@ -37,6 +38,17 @@ class Interface():
         print(choise=="c")
         #if(choise=="c"):
             #print_Creation()
+
+    @staticmethod
+    def set_Addr_Serv():
+        address = input("Entrez l'adresse du serveur : ")
+        try :
+            ((api.set_addr_Serv(address))["status"]=="OK")
+            print("Connexion établie avec le serveur")
+            return True
+        except :
+            print("Server not found")
+            return False
 
     @staticmethod
     def print_Creation():

@@ -6,11 +6,25 @@ import requests
 import json
 import socket
 
-hostname = socket.gethostname()    
-IPAddr = str(socket.gethostbyname(hostname))
-
 class ApiCalls(object):
-    @staticmethod
-    def connexion(name):
-        return (requests.get("http://0.0.0.0:5000/v0/conn/init/%s/10/%s"% (IPAddr,name))).json()
+
+    def __init__(self):
+        self.hostname = socket.gethostname()    
+        self.IPAddr = str(socket.gethostbyname(self.hostname))
+        self.addrServ= "0.0.0.0"
+        self.prefix="http://0.0.0.0:5000/v0"
+
+    def set_addr_Serv(self,addr):
+        self.addrServ=addr
+        self.prefix = "http://%s:5000/v0"%addr
+        return self.pingServ()
+
+    def pingServ(self):
+        return (requests.get("%s/conn/ping"%(self.prefix))).json()
+
+    def connexion(self,name):
+        return (requests.get("%s/conn/init/%s/10/%s"% (self.prefix,self.IPAddr,name))).json()
+
+
+instance_Server = ApiCalls()
 
