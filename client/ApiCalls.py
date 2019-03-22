@@ -1,17 +1,10 @@
-from uuid import uuid4
-import os
-import http
-import time
 import requests
 import json
-import socket
 
 class ApiCalls(object):
 
     def __init__(self):
         self.session = requests.Session()
-        self.hostname = socket.gethostname()    
-        self.IPAddr = str(socket.gethostbyname(self.hostname))
         self.addrServ= "0.0.0.0"
         self.prefix="http://0.0.0.0:5000/v0"
 

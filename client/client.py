@@ -11,7 +11,7 @@ it=itc.Interface
 itc.clear()
 it.standard_Print("Welcome to Pyker BB ")
 user.IDs_= it.set_Addr_Serv(sys.argv[1])
-api.ping_Serv()
+user.ping_Serv()
 
 input("END")
 exit(0)
