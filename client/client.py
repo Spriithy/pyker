@@ -14,5 +14,6 @@ user.IDs_= it.set_Addr_Serv(sys.argv[1])
 user.ping_Serv()
 
 pinger.start()
+pinger.join()
 input("___END___")
 exit(0)

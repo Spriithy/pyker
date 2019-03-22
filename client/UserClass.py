@@ -11,7 +11,7 @@ class UserClass():
     def pull_Message(self):
         messages_Pulled=api.pull_Messages(self.last_Message)
         self.last_Message=self.last_Message+len(messages_Pulled["lobby.messages"])
-        return messages_Pulled
+        return messages_Pulled["lobby.messages"]
 
     def push_Message(self,message,to='lobby') :
         if(len(message.strip())==0):
