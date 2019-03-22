@@ -8,7 +8,6 @@ bp = Blueprint('conn', __name__, url_prefix='/v0/conn')
 @bp.route('/init', methods=['POST'])
 def init():
     if request.method == 'POST':
-        session['ip'] = request.form.get('ip', None)
         session['user.name'] = request.form.get('user.name', None)
         session['user.id'] = str(uuid4())
         session['state'] = state.NO_LOBBY
