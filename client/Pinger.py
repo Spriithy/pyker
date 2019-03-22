@@ -9,7 +9,7 @@ class Pinger(Thread):
 
     def run(self):
         while(True):
-            user.pull_Message()
-            time.sleep(10) #temps en sec
+            print(user.pull_Message())
+            time.sleep(0.1) #temps en sec
 
 pinger=Pinger()

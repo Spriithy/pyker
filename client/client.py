@@ -13,5 +13,6 @@ it.standard_Print("Welcome to Pyker BB ")
 user.IDs_= it.set_Addr_Serv(sys.argv[1])
 user.ping_Serv()
 
-input("END")
+pinger.start()
+input("___END___")
 exit(0)
