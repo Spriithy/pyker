@@ -10,13 +10,24 @@ messages = [{
     "id": 0,
     "from": "server",
     "to": "lobby",
-    "date": "00:00:00 01/01/2019",
-    "content": "hello",
+    "date": "00:00:00",
+    "content": "Welcome on Pyker!"
 }]
 
 
 @bp.route('/pull/messages')
 def pull_messages():
+    """
+    
+    method: GET
+    args:   start: l'id du dernier message recu
+    
+    """
+    if session['state'] is not state.IN_LOBBY:
+        return Response(
+            '{"status": "ERROR", "message": "user not in lobby"}',
+            mimetype='text/json')
+
     start = 0
     if request.args.get('start', None):
         start = int(request.args.get('start'))
@@ -33,6 +44,13 @@ def pull_messages():
 
 @bp.route('/push/message', methods=['POST'])
 def push_message():
+    """
+
+    method: POST
+    form:   message.to:   destinataire du message (ex: Spriithy#2367)
+            message.from: celui qui a envoyé le message (ex: ErnestBidouille#8888)
+
+    """
     if session['state'] is not state.IN_LOBBY:
         return Response(
             '{"status": "ERROR", "message": "user not in lobby"}',
