@@ -11,7 +11,7 @@ users = {}
 @bp.route('/get/users')
 def get_users():
     return Response(
-        '{"state": "OK", "message": "", "payload.type": "conn.users", "conn.users": '
+        '{"state": "OK", "message": "", "payload.type": "user.list", "user.list": '
         + json.dumps(users) + '}',
         mimetype='text/json')
 

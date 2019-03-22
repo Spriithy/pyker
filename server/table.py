@@ -1,6 +1,7 @@
 from flask import *
-import lobby
+import json
 import random
+import lobby
 import state
 
 bp = Blueprint('table', __name__, url_prefix='/table')
@@ -14,6 +15,15 @@ def user_table(user):
             return table
 
     return None
+
+
+@bp.route('/get/tables')
+def get_tables():
+    return Response(
+        '{"status": "OK", "message": "", "payload.type": "table.list", "table.list": '
+        + json.dumps(list(filter(lambda t: tables[t]['table.name'],
+                                 tables))) + '}',
+        mimetype='text/json')
 
 
 @bp.route('/init', methods=['POST'])
