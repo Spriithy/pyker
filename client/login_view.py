@@ -16,7 +16,6 @@ def read_str(stdscr, y, x, n, prompt=''):
 
 @curses.wrapper
 def main(stdscr):
-    # Clear screen
     stdscr.clear()
 
     (max_y, max_x) = (curses.LINES, curses.COLS)
