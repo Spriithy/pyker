@@ -23,7 +23,7 @@ def main(stdscr):
     text = 'Type in your username'
     stdscr.addstr(max_y // 3, max_x // 2 - len(text) // 2, text, curses.A_BOLD)
     user_name = read_str(stdscr, max_y // 3 + 1,
-                         max_x // 2 - len(text) // 2 - 2, len(text), '$')
+                         max_x // 2 - len(text) // 2 - 2, len(text), '>')
 
     connect(user_name)
 
