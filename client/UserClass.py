@@ -19,13 +19,14 @@ class UserClass():
         return True if (api.push_Message(message,to)["status"]=="OK") else False
 
     def ping_Serv(self):
-        api.ping_Serv()
+        return api.ping_Serv()["action"]
 
-    def connexion(self,address,username):
-        retour_Connexion = api.set_addr_Serv(address,username)
-        if retour_Connexion["status"]=="OK":
-            self.IDs_=[retour_Connexion["user.name"],retour_Connexion["user.id"]]
-            return True
+    def connection(self,address,username):
+        retour_connection = api.set_addr_Serv(address,username)
+        if retour_connection["status"]=="OK":
+            self.IDs_=[retour_connection["user.name"],retour_connection["user.id"]]
+            
+            return self.ping_Serv()
         return False
 
 user = UserClass()

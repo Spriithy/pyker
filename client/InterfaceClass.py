@@ -18,7 +18,7 @@ class InterfaceClass():
             username = "Anonymous" if len(username)==0 else username 
             try :
                 response = api.set_addr_Serv(address,username)
-                print("Connexion établie avec le serveur")
+                print("connection établie avec le serveur")
                 return response["user.name"],response["user.id"]
             except :
                 print("Server not found")

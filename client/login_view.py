@@ -15,30 +15,14 @@ def read_str(stdscr, y, x, n, prompt=''):
     curses.noecho()
     return str(text,'utf-8')
 
-def connexion_Lobby(max_y, max_x,stdscr):
+def connection_Lobby(stdscr,max_y, max_x):
+    stdscr.clear()
     text = 'Type in your username'
     stdscr.addstr(max_y // 3, max_x // 2 - len(text) // 2, text, curses.A_BOLD)
     user_name = read_str(stdscr, max_y // 3 + 1,
                          max_x // 2 - len(text) // 2 - 2, len(text), '>')
-    user.connexion(sys.argv[1],user_name)
-    stdscr.getch()
     try :
-        response = api.set_addr_Serv(address,username)
-        print("Connexion établie avec le serveur")
-        return response["user.name"],response["user.id"]
+        return user.connection(sys.argv[1],user_name)
     except :
-        print("Server not found")
-        exit(0)
+        exit("Serveur not found")
 
-
-@curses.wrapper
-def main(stdscr):
-    # Clear screen
-    stdscr.clear()
-    (max_y, max_x) = (curses.LINES, curses.COLS)
-    connexion_Lobby(max_y,max_x,stdscr)
-
-
-    
-    stdscr.refresh()
-    stdscr.getkey()

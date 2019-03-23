@@ -11,9 +11,9 @@ class ApiCalls(object):
     def set_addr_Serv(self,addr,username):
         self.addrServ=addr
         self.prefix = "http://%s:5000/v0"%addr
-        return self.connexion_Init(username)
+        return self.connection_Init(username)
 
-    def connexion_Init(self,username):
+    def connection_Init(self,username):
         return((self.session.post("%s/conn/init"% (self.prefix),data={"user.name":"%s"%username})).json())
     
     def ping_Serv(self):
