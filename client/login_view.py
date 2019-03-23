@@ -9,8 +9,9 @@ def read_str(stdscr, y, x, n, prompt=''):
     curses.echo()
     stdscr.addstr(y, x, prompt)
     stdscr.refresh()
-    input = stdscr.getstr(y, len(prompt) + 1 + x, n)
-    return input
+    text = stdscr.getstr(y, len(prompt) + 1 + x, n)
+    curses.noecho()
+    return text
 
 
 @curses.wrapper
