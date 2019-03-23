@@ -5,7 +5,7 @@ from UserClass import user as user
 def clear():
     os.system("clear")
 
-class Interface():
+class InterfaceClass():
 
     def __init__(self):
         print("")

@@ -7,7 +7,7 @@ from UserClass import user as user
 from Pinger import pinger as pinger
 
 
-it=itc.Interface
+it=itc.InterfaceClass
 itc.clear()
 it.standard_Print("Welcome to Pyker BB ")
 user.IDs_= it.set_Addr_Serv(sys.argv[1])
