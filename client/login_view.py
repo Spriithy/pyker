@@ -1,6 +1,8 @@
 import curses
 import signal
 import sys
+from ApiCalls import instance_Server as api
+from UserClass import user as user
 
 signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
 
@@ -11,20 +13,16 @@ def read_str(stdscr, y, x, n, prompt=''):
     stdscr.refresh()
     text = stdscr.getstr(y, len(prompt) + 1 + x, n)
     curses.noecho()
-    return text
+    return str(text,'utf-8')
 
-
-@curses.wrapper
-def main(stdscr):
+def connection_Lobby(stdscr,max_y, max_x):
     stdscr.clear()
-
-    (max_y, max_x) = (curses.LINES, curses.COLS)
     text = 'Type in your username'
     stdscr.addstr(max_y // 3, max_x // 2 - len(text) // 2, text, curses.A_BOLD)
     user_name = read_str(stdscr, max_y // 3 + 1,
                          max_x // 2 - len(text) // 2 - 2, len(text), '>')
+    try :
+        return user.connection(sys.argv[1],user_name)
+    except :
+        exit("Serveur not found")
 
-    connect(user_name)
-
-    stdscr.refresh()
-    stdscr.getkey()

@@ -6,18 +6,22 @@ from UserClass import user as user
 from Pinger import pinger as pinger
 import curses
 from curses import wrapper
+import login_view
+import signal
 
+signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
 
+@curses.wrapper
 def main(stdscr):
-    stdscr.clear()
+    (max_y, max_x) = (curses.LINES, curses.COLS)
+    login_view.connection_Lobby(stdscr,max_y,max_x)
+    stdscr.getch()
 
-    # This raises ZeroDivisionError when i == 10.
-    for i in range(1, 9):
-        v = i - 10
-        stdscr.addstr(i, 0, '10 divided by {} is {}'.format(v, 10 / v))
-
-    stdscr.refresh()
-    stdscr.getkey()
-
-
-wrapper(main)
+"""
+carte=".------..------..------..------..------.
+|P.--. ||Y.--. ||K.--. ||E.--. ||R.--. |
+| :/\: || (\/) || :/\: || (\/) || :(): |
+| (__) || :\/: || :\/: || :\/: || ()() |
+| '--'P|| '--'Y|| '--'K|| '--'E|| '--'R|
+`------'`------'`------'`------'`------'"
+"""
