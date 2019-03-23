@@ -17,7 +17,7 @@ class ApiCalls(object):
         return((self.session.post("%s/conn/init"% (self.prefix),data={"user.name":"%s"%username})).json())
     
     def ping_Serv(self):
-        self.session.get("%s/ping"% (self.prefix))
+        return self.session.get("%s/ping"% (self.prefix)).json()
 
     def pull_Messages(self,last_Message):
         return self.session.get("%s/lobby/pull/messages?start=%i" % (self.prefix, last_Message)).json()
