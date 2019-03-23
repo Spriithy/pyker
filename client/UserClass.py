@@ -24,6 +24,8 @@ class UserClass():
         return ((api.ping_Serv())["action"])
 
     def connection(self, address, username):
+        if username =="":
+            username="Anonymous"
         retour_connection = api.set_addr_Serv(address, username)
         if retour_connection["status"] == "OK":
             self.IDs_ = [
@@ -32,5 +34,7 @@ class UserClass():
             return self.ping_Serv()
         return False
 
-
+    def getUsers(self):
+        return api.getUsers()["user.list"]
+        
 user = UserClass()

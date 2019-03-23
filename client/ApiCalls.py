@@ -33,5 +33,7 @@ class ApiCalls(object):
                 "message.to": "%s" % to
             }).json()
 
+    def getUsers(self):
+        return self.session.get("%s/conn/get/users"%self.prefix).json()
 
 instance_Server = ApiCalls()
