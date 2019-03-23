@@ -25,4 +25,4 @@ def connection_Lobby(stdscr, max_y, max_x):
     try:
         return user.connection(sys.argv[1], user_name)
     except:
-        exit("Serveur not found")
+        exit("Server connection failed")
