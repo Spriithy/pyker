@@ -1,4 +1,5 @@
 import curses
+import curses.textpad as textpad
 import signal
 import sys
 
@@ -32,10 +33,13 @@ def main(stdscr):
             stdscr.addstr(i, 0, '<Spriithy> ' + lines[i])
 
         stdscr.addstr(max_y - 2, 0, get_statusbar(max_x), curses.A_REVERSE)
-
-        message = read_str(stdscr, max_y - 1, 0, max_x, '>')
-        lines.append(message)
-
+        editwin = curses.newwin(1, max_x, max_y - 1, 0)
+        box = textpad.Textbox(editwin)
         stdscr.refresh()
+        box.edit()
+        text = box.gather().strip()
+        if len(text) == 0:
+            continue
+        lines.append(text)
 
     stdscr.getkey()
