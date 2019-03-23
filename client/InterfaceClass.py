@@ -5,7 +5,7 @@ from UserClass import user as user
 def clear():
     os.system("clear")
 
-class Interface():
+class InterfaceClass():
 
     def __init__(self):
         print("")
@@ -31,7 +31,7 @@ class Interface():
 
     @staticmethod
     def print_Interface(username):
-        Interface.standard_Print("Create or join table ?",whoAmI=username)
+        InterfaceClass.standard_Print("Create or join table ?",whoAmI=username)
         choise=input(">")
         print(choise=="c")
         #if(choise=="c"):
