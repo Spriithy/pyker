@@ -8,7 +8,8 @@ import login_view
 import lobby_view
 import signal
 
-signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
+
+signal.signal(signal.SIGINT, lambda x, y: (user.quit() and sys.exit(0)))
 
 
 def do(stdsrc, action):

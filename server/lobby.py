@@ -85,10 +85,6 @@ def push_message():
             mimetype='text/json')
 
     content = request.form.get('message.content', '')
-    if content[0] in ['.', '!', '/']:
-        return Response(
-            '{"status": "ERROR", "message": "commands not implemented"}',
-            mimetype='text/json')
 
     message = {
         "id": len(messages),

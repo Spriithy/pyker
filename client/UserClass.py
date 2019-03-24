@@ -18,6 +18,19 @@ class UserClass():
     def push_Message(self, message, to='lobby'):
         if (len(message.strip()) == 0):
             return False
+        if message[0] in ['!','.','/']:
+            message_splited=message.split()
+            if message_splited[0]==message[0]+"w":
+                to=message_splited[1]
+                cut = len(message_splited[0]+message_splited[1])+2
+                message=to + ": " + message[cut:]
+
+            elif message_splited[0]==message[0]+"t": 
+                return api.init_Table(message.split()[1])
+
+            elif message_splited[0]==message[0]+"q":
+                api.quit()
+                exit("Deconnecté")
         return api.push_Message(message, to)["status"] == "OK"
 
     def ping_Serv(self):
@@ -36,5 +49,10 @@ class UserClass():
 
     def getUsers(self):
         return api.getUsers()["user.list"]
-        
+    
+    def getTables(self):
+        return api.get_Tables()["table.list"]
+
+    def quit(self):
+        return api.quit()
 user = UserClass()

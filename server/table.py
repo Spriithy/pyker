@@ -4,7 +4,7 @@ import random
 import lobby
 import state
 
-bp = Blueprint('table', __name__, url_prefix='/table')
+bp = Blueprint('table', __name__, url_prefix='/v0/table')
 
 tables = {}
 
