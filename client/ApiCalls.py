@@ -45,6 +45,15 @@ class ApiCalls(object):
     def get_Tables(self):
         return self.session.get("%s/table/list" % self.prefix).json()
 
+    def join_Table(self, name):
+        return self.session.get("%s/table/join/%s" % (self.prefix, name))
+
+    def leave_Table(self):
+        return self.session.get("%s/table/leave" % (self.prefix))
+
+    def drop_Table(self, name):
+        return self.session.get("%s/table/drop/%s" % (self.prefix, name))
+
     def quit(self):
         return self.session.get('%s/conn/drop' % self.prefix).json()
 
