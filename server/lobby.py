@@ -26,7 +26,25 @@ def broadcast(message, dest='lobby', level='INFO'):
 
 
 messages = []
-broadcast('Welcome on Pyker!')
+
+
+@bp.route('/join')
+def join():
+    broadcast('Welcome on Pyker!')
+    return Response('{"status": "OK", "message": ""}')
+
+
+@bp.route('/last_message_id')
+def last_message_id():
+    if session['state'] is not state.IN_LOBBY:
+        return Response(
+            '{"status": "ERROR", "message": "user not in lobby"}',
+            mimetype='text/json')
+
+    return Response(
+        '{"status": "OK", "message": "", "payload.type": "int", "int": %d}' %
+        len(messages),
+        mimetype='text/json')
 
 
 @bp.route('/pull/messages')
