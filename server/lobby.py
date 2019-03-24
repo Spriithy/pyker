@@ -26,7 +26,12 @@ def broadcast(message, dest='lobby', level='INFO'):
 
 
 messages = []
-broadcast('Welcome on Pyker!')
+
+
+@bp.route('/join')
+def join():
+    broadcast('Welcome on Pyker!')
+    return Response('{"status": "OK", "message": ""}')
 
 
 @bp.route('/last_message_id')
