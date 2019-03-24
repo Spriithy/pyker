@@ -24,10 +24,6 @@ class ApiCalls(object):
     def join_lobby(self):
         return self.session.get('%s/lobby/join' % self.prefix).json()
 
-    def last_message_id(self):
-        return self.session.get(
-            '%s/lobby/last_message_id' % self.prefix).json()['int']
-
     def pull_Messages(self, last_Message):
         return self.session.get("%s/lobby/pull/messages?start=%i" %
                                 (self.prefix, last_Message)).json()

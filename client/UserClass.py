@@ -11,8 +11,6 @@ class UserClass():
         return self.IDs_
 
     def pull_Message(self):
-        if not self.last_Message:
-            self.last_Message = api.last_message_id() - 1
         messages_Pulled = api.pull_Messages(self.last_Message)
         self.last_Message = self.last_Message + len(
             messages_Pulled["lobby.messages"])
