@@ -6,7 +6,6 @@ class UserClass():
         self.IDs_ = None
         self.last_Message = 0
         self.stop_threads = False
-        self.myTables = []
 
     def whoAmI(self):
         return self.IDs_
@@ -67,9 +66,6 @@ class UserClass():
 
     def getTables(self):
         return api.get_Tables()["table.list"]
-
-    def getMyTables(self):
-        return self.myTables
 
     def quit(self):
         self.stop_threads = True

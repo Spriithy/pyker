@@ -1,5 +1,4 @@
 import sys
-from ApiCalls import instance_Server as api
 from UserClass import user as user
 import curses
 from curses import wrapper
@@ -11,7 +10,6 @@ signal.signal(signal.SIGINT, lambda x, y: (user.quit() and sys.exit(0)))
 
 
 def do(stdsrc, action):
-    (max_y, max_x) = stdsrc.getmaxyx()
     if action == "lobby.join":
         lobby_view.run(stdsrc)
 
@@ -20,4 +18,3 @@ def do(stdsrc, action):
 def main(stdscr):
     (max_y, max_x) = stdscr.getmaxyx()
     do(stdscr, login_view.connection_Lobby(stdscr, max_y, max_x))
-    stdscr.getch()
