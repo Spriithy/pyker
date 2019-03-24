@@ -1,10 +1,7 @@
 import curses
-import signal
 import sys
 from ApiCalls import instance_Server as api
 from UserClass import user as user
-
-signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
 
 
 def read_str(stdscr, y, x, n, prompt=''):

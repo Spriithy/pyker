@@ -18,17 +18,17 @@ class UserClass():
     def push_Message(self, message, to='lobby'):
         if (len(message.strip()) == 0):
             return False
-        if message[0] in ['!','.','/']:
-            message_splited=message.split()
-            if message_splited[0]==message[0]+"w":
-                to=message_splited[1]
-                cut = len(message_splited[0]+message_splited[1])+2
-                message=to + ": " + message[cut:]
+        if message[0] in ['!', '.', '/']:
+            message_splited = message.split()
+            if message_splited[0] == message[0] + "w":
+                to = message_splited[1]
+                cut = len(message_splited[0] + message_splited[1]) + 2
+                message = to + ": " + message[cut:]
 
-            elif message_splited[0]==message[0]+"t": 
+            elif message_splited[0] == message[0] + "t":
                 return api.init_Table(message.split()[1])
 
-            elif message_splited[0]==message[0]+"q":
+            elif message_splited[0] == message[0] + "q":
                 api.quit()
                 exit("Deconnecté")
         return api.push_Message(message, to)["status"] == "OK"
@@ -37,8 +37,8 @@ class UserClass():
         return ((api.ping_Serv())["action"])
 
     def connection(self, address, username):
-        if username =="":
-            username="Anonymous"
+        if username == "":
+            username = "Anonymous"
         retour_connection = api.set_addr_Serv(address, username)
         if retour_connection["status"] == "OK":
             self.IDs_ = [
@@ -49,10 +49,12 @@ class UserClass():
 
     def getUsers(self):
         return api.getUsers()["user.list"]
-    
+
     def getTables(self):
         return api.get_Tables()["table.list"]
 
     def quit(self):
         return api.quit()
+
+
 user = UserClass()
