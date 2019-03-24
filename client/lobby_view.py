@@ -4,7 +4,6 @@ from UserClass import user
 from threading import Thread
 import time
 
-lines = []
 ip = '127.0.0.1:5000'
 
 
@@ -14,8 +13,8 @@ def fmt_message(message):
 
 
 def get_statusbar(w):
-    lines_str = '%d' % len(lines)
-    return '   %s %s%s ' % (user.IDs_[0], ' ' * (w - 3 - len(ip) - 10), ip)
+    id_str = 'ID : %s#%s' % (user.IDs_[0], user.IDs_[1])
+    return id_str + ' ' * (w - 1 - len(ip) - len(id_str)) + ip
 
 
 def pull_Thread(windowPull, windowUsers, windowTable):
@@ -25,8 +24,6 @@ def pull_Thread(windowPull, windowUsers, windowTable):
     usersOld = []
     tables = []
     tablesOld = []
-    #myTables = []
-    #myTablesOld = []
     windowPull.clear()
 
     while (True):
@@ -46,8 +43,6 @@ def pull_Thread(windowPull, windowUsers, windowTable):
         for i in range(len(lines)):
 
             windowPull.addstr(i + 1, 0, lines[i])
-        windowPull.border()
-        windowPull.addstr(0, 0, "Chat")
         windowPull.refresh()
 
         #reception et affichage des users connectés
@@ -75,28 +70,14 @@ def pull_Thread(windowPull, windowUsers, windowTable):
             windowTable.refresh()
             tablesOld = tables
         tables = []
-        """
-        #affichage des myTables actives
-        for myTables in user.getMyTables():
-            myTables.append(myTables)
-        if myTables != myTablesOld:
-            windowMyTables.clear()
-            windowMyTables.border()
-            windowMyTables.addstr(0, 0, "MyTables")
-            for i in range(len(myTables)):
-                #changer le add str et trouver bon format
-                windowMyTables.addstr(1, i + 5, myTables[i])
-            windowMyTables.refresh()
-            myTablesOld = myTables
-        myTables = []
-        """
+
         time.sleep(1)  #temps en sec
 
 
 def run(stdscr):
     stdscr.clear()
     (max_y, max_x) = stdscr.getmaxyx()
-    width_col_usersCo = 20
+    width_col_usersCo = 30
     begin_x = 0
     begin_y = 0
     height = max_y - 2
@@ -110,13 +91,7 @@ def run(stdscr):
     thread_Wind.border()
     thread_Wind.addstr(0, 0, "Chat")
     thread_Wind.refresh()
-    """
-    #creation windows tables en cours
-    threadMyTables_Win = curses.newwin(3, width, height - 3, 0)
-    threadMyTables_Win.border()
-    threadMyTables_Win.addstr(0, 0, "MyTables")
-    threadMyTables_Win.refresh()
-    """
+
     #creation window de statubar
     message_Win = curses.newwin(2, max_x, height, 0)
     # message_Win.border()
@@ -136,9 +111,6 @@ def run(stdscr):
     threadTables_win.addstr(0, 1, "Tables")
     threadTables_win.refresh()
 
-    #a enlever after debug
-    threadTables_win.getch()
-
     #on run le Thread des pull messages
     threadPulling = Thread(
         target=pull_Thread,
@@ -151,9 +123,9 @@ def run(stdscr):
     while True:
         message_Win.addstr(0, 0, get_statusbar(max_x), curses.A_REVERSE)
         message_Win.addstr(1, 0, ">")
+        message_Win.refresh()
         editwin = curses.newwin(1, max_x, max_y - 1, 1)
         box = textpad.Textbox(editwin)
-        message_Win.refresh()
         box.edit()
         text = box.gather().strip()
         if len(text) == 0:
