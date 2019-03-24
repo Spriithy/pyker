@@ -6,3 +6,4 @@ gerer le formatage des messages
 gerer le format des chuchos (/w)
 gerer la deconnexion -> fonctionne pas ?
 gerer les joins tables -> doit-on automatiquement rejoindre une table que l'on créé ?
+gerer les problemes de threading à la deconnexion **URGENT**
