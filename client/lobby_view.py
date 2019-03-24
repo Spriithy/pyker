@@ -7,20 +7,9 @@ import time
 ip = '127.0.0.1:5000'
 
 
-def fmt_message(message, user):
-    msg = '%s <%s> %s' % (message['date'], message['from'], message['content'])
-    return msg, curses.A_NORMAL if user != message['to'] else curses.A_COLOR
-
-
-def get_message_color(message):
-    if 'ERROR' in message:
-        return curses.color_pair(1)
-
-    if 'WARNING' in message:
-        return curses.color_pair(3)
-
-    if 'INFO' in message:
-        return curses.color_pair(4)
+def fmt_message(message):
+    return '%s <%s> %s' % (message['date'], message['from'],
+                           message['content'])
 
 
 def get_statusbar(w):
@@ -29,35 +18,30 @@ def get_statusbar(w):
 
 
 def pull_Thread(windowPull, windowUsers, windowTable):
+    (max_y, max_x) = windowPull.getmaxyx()
+    lines = []
     users = []
     usersOld = []
     tables = []
     tablesOld = []
-    lines = []
     windowPull.clear()
 
-    while True:
-        (max_y, max_x) = windowPull.getmaxyx()
+    while (True):
         if user.stop_threads:
             break
-        username = '%s#%s' % (user.IDs_[0], user.IDs_[1])
         #reception et affichage des messages
         for message in user.pull_Message():
-            message, fmt = fmt_message(message, username)
+            message = fmt_message(message)
             if len(message) > max_x - 2:
                 while (len(message) > max_x - 2):
                     addLine = message[:max_x - 2]
-                    lines.append([addLine, fmt])
+                    lines.append(addLine)
                     message = message[max_x - 2:]
-                lines.append([message, fmt])
+                lines.append(message)
             else:
-                lines.append([message, fmt])
+                lines.append(message)
         for i in range(len(lines)):
-            if lines[i][1] == curses.A_COLOR:
-                windowPull.addstr(i, 0, lines[i][0],
-                                  get_message_color(lines[i][0]))
-            else:
-                windowPull.addstr(i, 0, lines[i][0])
+            windowPull.addstr(i, 0, lines[i])
         windowPull.refresh()
 
         #reception et affichage des users connectés
@@ -103,6 +87,8 @@ def run(stdscr):
 
     #creation de la window de thread_Pull
     thread_Wind = curses.newwin(height, width, begin_y, begin_x)
+    thread_Wind.border()
+    thread_Wind.addstr(0, 0, "Chat")
     thread_Wind.refresh()
 
     #creation window de statubar
@@ -135,9 +121,9 @@ def run(stdscr):
     threadPulling.start()
     while True:
         message_Win.addstr(0, 0, get_statusbar(max_x), curses.A_REVERSE)
-        message_Win.addstr(1, 0, ">")
+        message_Win.addstr(1, 0, '$ ')
         message_Win.refresh()
-        editwin = curses.newwin(1, max_x, max_y - 1, 1)
+        editwin = curses.newwin(1, max_x, max_y - 1, 2)
         box = textpad.Textbox(editwin)
         box.edit()
         text = box.gather().strip()
