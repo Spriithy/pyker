@@ -10,7 +10,6 @@ signal.signal(signal.SIGINT, lambda x, y: (user.quit() and sys.exit(0)))
 
 
 def do(stdsrc, action):
-    (max_y, max_x) = stdsrc.getmaxyx()
     if action == "lobby.join":
         lobby_view.run(stdsrc)
 

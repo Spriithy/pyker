@@ -41,8 +41,7 @@ def pull_Thread(windowPull, windowUsers, windowTable):
             else:
                 lines.append(message)
         for i in range(len(lines)):
-
-            windowPull.addstr(i + 1, 0, lines[i])
+            windowPull.addstr(i, 0, lines[i])
         windowPull.refresh()
 
         #reception et affichage des users connectés

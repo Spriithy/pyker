@@ -15,11 +15,27 @@ def read_str(stdscr, y, x, n, prompt=''):
 
 def connection_Lobby(stdscr, max_y, max_x):
     stdscr.clear()
+    for i in range(len(pyker)):
+        stdscr.addstr(max_y // 6 + i, max_x // 2 - len(pyker[i]) // 2,
+                      pyker[i])
+    stdscr.addstr
     text = 'Type in your username'
-    stdscr.addstr(max_y // 3, max_x // 2 - len(text) // 2, text, curses.A_BOLD)
-    user_name = read_str(stdscr, max_y // 3 + 1,
+    stdscr.addstr(max_y // 2, max_x // 2 - len(text) // 2, text, curses.A_BOLD)
+    credit = '@Spriithy & @ErnestBidouille'
+    stdscr.addstr(max_y - 4, max_x // 2 - len(credit) // 2, credit)
+    user_name = read_str(stdscr, max_y // 2 + 1,
                          max_x // 2 - len(text) // 2 - 2, len(text), '>')
     try:
         return user.connection(sys.argv[1], user_name)
     except:
         exit("Server connection failed")
+
+
+pyker = [
+    '██████╗ ██╗   ██╗██╗  ██╗███████╗██████╗',
+    '██╔══██╗╚██╗ ██╔╝██║ ██╔╝██╔════╝██╔══██╗',
+    '██████╔╝ ╚████╔╝ █████╔╝ █████╗  ██████╔╝',
+    '██╔═══╝   ╚██╔╝  ██╔═██╗ ██╔══╝  ██╔══██╗',
+    '██║        ██║   ██║  ██╗███████╗██║  ██║',
+    '╚═╝        ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝',
+]
