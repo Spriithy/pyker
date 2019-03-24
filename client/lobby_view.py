@@ -18,16 +18,15 @@ def get_statusbar(w):
     return '   %s %s%s ' % (user.IDs_[0], ' ' * (w - 3 - len(ip) - 10), ip)
 
 
-def pull_Thread(windowPull, windowUsers, windowTable, windowMyTables):
+def pull_Thread(windowPull, windowUsers, windowTable):
     (max_y, max_x) = windowPull.getmaxyx()
     lines = []
     users = []
     usersOld = []
     tables = []
     tablesOld = []
-    myTables = []
-    myTablesOld = []
-
+    #myTables = []
+    #myTablesOld = []
     windowPull.clear()
 
     while (True):
@@ -76,7 +75,7 @@ def pull_Thread(windowPull, windowUsers, windowTable, windowMyTables):
             windowTable.refresh()
             tablesOld = tables
         tables = []
-
+        """
         #affichage des myTables actives
         for myTables in user.getMyTables():
             myTables.append(myTables)
@@ -90,6 +89,7 @@ def pull_Thread(windowPull, windowUsers, windowTable, windowMyTables):
             windowMyTables.refresh()
             myTablesOld = myTables
         myTables = []
+        """
         time.sleep(0.1)  #temps en sec
 
 
@@ -106,16 +106,17 @@ def run(stdscr):
     curses.curs_set(0)
 
     #creation de la window de thread_Pull
-    thread_Wind = curses.newwin(height - 3, width, begin_y, begin_x)
+    thread_Wind = curses.newwin(height, width, begin_y, begin_x)
     thread_Wind.border()
     thread_Wind.addstr(0, 0, "Chat")
     thread_Wind.refresh()
-
+    """
     #creation windows tables en cours
     threadMyTables_Win = curses.newwin(3, width, height - 3, 0)
     threadMyTables_Win.border()
     threadMyTables_Win.addstr(0, 0, "MyTables")
     threadMyTables_Win.refresh()
+    """
     #creation window de statubar
     message_Win = curses.newwin(2, max_x, height, 0)
     # message_Win.border()
@@ -145,7 +146,6 @@ def run(stdscr):
             thread_Wind,
             threadUSers_win,
             threadTables_win,
-            threadMyTables_Win,
         ))
     threadPulling.start()
     while True:
