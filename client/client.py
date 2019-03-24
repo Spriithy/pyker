@@ -17,4 +17,7 @@ def do(stdsrc, action):
 @curses.wrapper
 def main(stdscr):
     (max_y, max_x) = stdscr.getmaxyx()
+    curses.use_default_colors()
+    for i in range(0, curses.COLORS):
+        curses.init_pair(i, i, -1)
     do(stdscr, login_view.connection_Lobby(stdscr, max_y, max_x))

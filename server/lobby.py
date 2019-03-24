@@ -6,23 +6,27 @@ import state
 
 bp = Blueprint('lobby', __name__, url_prefix='/v0/lobby')
 
-messages = [{
-    "id": 0,
-    "from": "server",
-    "to": "lobby",
-    "date": "00:00:00",
-    "content": "Welcome on Pyker!"
-}]
+
+def error(message, dest='lobby'):
+    broadcast(message, dest=dest, level='ERROR')
 
 
-def broadcast(message, dest='lobby'):
+def warning(message, dest='lobby'):
+    broadcast(message, dest=dest, level='WARNING')
+
+
+def broadcast(message, dest='lobby', level='INFO'):
     messages.append({
         "id": len(messages),
-        "from": "server",
+        "from": level,
         "to": dest,
         "date": datetime.datetime.now().strftime('%H:%M:%S'),
         "content": message,
     })
+
+
+messages = []
+broadcast('Welcome on Pyker!')
 
 
 @bp.route('/pull/messages')

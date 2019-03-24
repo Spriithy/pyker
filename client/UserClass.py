@@ -20,31 +20,33 @@ class UserClass():
         if (len(message.strip()) == 0):
             return False
         if message[0] in ['-', '!', '.', '/']:
-            message_splited = message.split()
+            message_splited = message[1:].split()
             try:
-                if message_splited[0] == message[0] + "w":
+                if message_splited[0] in ('w', 'whisp', 'whisper'):
                     to = message_splited[1]
                     cut = len(message_splited[0] + message_splited[1]) + 2
                     message = to + ": " + message[cut:]
 
-                elif message_splited[0] == message[0] + "t":
+                elif message_splited[0] in ('t', 'table'):
                     return api.init_Table(message_splited[1])
 
-                elif message_splited[0] == message[0] + "j":
+                elif message_splited[0] in ('j', 'join'):
                     return api.join_Table(message_splited[1])
 
-                elif message_splited[0] == message[0] + "l":
+                elif message_splited[0] in ('l', 'leave'):
                     return api.leave_Table()
 
-                elif message_splited[0] == message[0] + "d":
+                elif message_splited[0] in ('d', 'drop'):
                     return api.drop_Table(message_splited[1])
 
-                elif message_splited[0] == message[0] + "q":
+                elif message_splited[0] in ('q', 'quit', 'exit'):
                     api.quit()
                     exit("Deconnecté")
             except:
                 pass
-        return api.push_Message(message, to)["status"] == "OK"
+
+        response = api.push_Message(message, to)
+        return response, response['status'] == 'OK'
 
     def ping_Serv(self):
         return ((api.ping_Serv())["action"])
