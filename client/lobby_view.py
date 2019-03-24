@@ -52,12 +52,16 @@ def pull_Thread(windowPull, windowUsers, windowTable):
                 lines.append([message, fmt])
             else:
                 lines.append([message, fmt])
-        for i in range(len(lines)):
-            if lines[i][1] == curses.A_COLOR:
-                windowPull.addstr(i, 0, lines[i][0],
-                                  get_message_color(lines[i][0]))
+
+        windowPull.clear()
+        scroller = (len(lines) - max_y) > 0 if (len(lines) - max_y) else 0
+
+        for i in range(len(lines) - scroller + 1):
+            if lines[i + scroller][1] == curses.A_COLOR:
+                windowPull.addstr(i, 0, lines[i + scroller][0],
+                                  get_message_color(lines[i + scroller][0]))
             else:
-                windowPull.addstr(i, 0, lines[i][0])
+                windowPull.addstr(i, 0, lines[i + scroller][0])
         windowPull.refresh()
 
         #reception et affichage des users connectés
