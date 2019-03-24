@@ -11,9 +11,11 @@ tables = {}
 
 def user_table(user):
     for table in tables:
-        if table['users'].index(user) >= 0:
+        try:
+            table['users'].index(user)
             return table
-
+        except:
+            pass
     return None
 
 
@@ -21,8 +23,7 @@ def user_table(user):
 def list_tables():
     return Response(
         '{"status": "OK", "message": "", "payload.type": "table.list", "table.list": '
-        + json.dumps(list(filter(lambda t: tables[t]['table.name'],
-                                 tables))) + '}',
+        + json.dumps(list(filter(lambda t: tables[t]['name'], tables))) + '}',
         mimetype='text/json')
 
 
@@ -36,9 +37,9 @@ def init():
     table_id = str(random.randint(0, 1000))
     table_name = request.form.get('table.name', 'table#%s' % table_id)
     tables[table_name] = {
-        "table.name": table_name,
-        "table.id": table_id,
-        "table.users": [user],
+        "name": table_name,
+        "id": table_id,
+        "users": [user],
     }
 
     lobby.broadcast('%s created table %s' % (user, table_name))
@@ -95,7 +96,7 @@ def leave():
     user = '%s#%s' % (session['user.name'], session['user.id'])
     table['users'].remove(user)
 
-    lobby.broadcast('%s left table %s' % (user, table['table.name']))
+    lobby.broadcast('%s left table %s' % (user, table['name']))
 
     return Response(
         '{"status": "OK", "message": "user left table: %s"}' %
