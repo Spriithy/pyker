@@ -21,6 +21,9 @@ class ApiCalls(object):
     def ping_Serv(self):
         return self.session.get("%s/ping" % (self.prefix)).json()
 
+    def join_lobby(self):
+        return self.session.get('%s/lobby/join' % self.prefix).json()
+
     def pull_Messages(self, last_Message):
         return self.session.get("%s/lobby/pull/messages?start=%i" %
                                 (self.prefix, last_Message)).json()

@@ -1,5 +1,6 @@
 import sys
 from UserClass import user as user
+from ApiCalls import instance_Server as api
 import curses
 from curses import wrapper
 import login_view
@@ -11,6 +12,7 @@ signal.signal(signal.SIGINT, lambda x, y: (user.quit() and sys.exit(0)))
 
 def do(stdsrc, action):
     if action == "lobby.join":
+        api.join_lobby()
         lobby_view.run(stdsrc)
 
 
