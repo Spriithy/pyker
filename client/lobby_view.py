@@ -44,10 +44,7 @@ def pull_Thread(windowPull, windowUsers, windowTable):
             else:
                 lines.append(message)
         for i in range(len(lines)):
-
-            windowPull.addstr(i + 1, 0, lines[i])
-        windowPull.border()
-        windowPull.addstr(0, 0, "Chat")
+            windowPull.addstr(i, 0, lines[i])
         windowPull.refresh()
 
         #reception et affichage des users connectés
@@ -107,8 +104,6 @@ def run(stdscr):
 
     #creation de la window de thread_Pull
     thread_Wind = curses.newwin(height, width, begin_y, begin_x)
-    thread_Wind.border()
-    thread_Wind.addstr(0, 0, "Chat")
     thread_Wind.refresh()
     """
     #creation windows tables en cours
