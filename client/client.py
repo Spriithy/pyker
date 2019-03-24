@@ -1,5 +1,4 @@
 import sys
-from ApiCalls import instance_Server as api
 from UserClass import user as user
 import curses
 from curses import wrapper
@@ -20,4 +19,3 @@ def do(stdsrc, action):
 def main(stdscr):
     (max_y, max_x) = stdscr.getmaxyx()
     do(stdscr, login_view.connection_Lobby(stdscr, max_y, max_x))
-    stdscr.getch()
