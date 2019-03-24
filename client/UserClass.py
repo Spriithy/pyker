@@ -22,17 +22,29 @@ class UserClass():
             return False
         if message[0] in ['-', '!', '.', '/']:
             message_splited = message.split()
-            if message_splited[0] == message[0] + "w":
-                to = message_splited[1]
-                cut = len(message_splited[0] + message_splited[1]) + 2
-                message = to + ": " + message[cut:]
+            try:
+                if message_splited[0] == message[0] + "w":
+                    to = message_splited[1]
+                    cut = len(message_splited[0] + message_splited[1]) + 2
+                    message = to + ": " + message[cut:]
 
-            elif message_splited[0] == message[0] + "t":
-                return api.init_Table(message.split()[1])
+                elif message_splited[0] == message[0] + "t":
+                    return api.init_Table(message_splited[1])
 
-            elif message_splited[0] == message[0] + "q":
-                api.quit()
-                exit("Deconnecté")
+                elif message_splited[0] == message[0] + "j":
+                    return api.join_Table(message_splited[1])
+
+                elif message_splited[0] == message[0] + "l":
+                    return api.leave_Table()
+
+                elif message_splited[0] == message[0] + "d":
+                    return api.drop_Table(message_splited[1])
+
+                elif message_splited[0] == message[0] + "q":
+                    api.quit()
+                    exit("Deconnecté")
+            except:
+                pass
         return api.push_Message(message, to)["status"] == "OK"
 
     def ping_Serv(self):

@@ -70,7 +70,7 @@ def join(table_name):
             mimetype='text/json')
 
     tables[table_name]['users'].append(user)
-
+    print(tables)
     lobby.broadcast('%s joined table %s' % (user, table_name))
 
     return Response(
@@ -112,6 +112,8 @@ def drop(table_name):
             mimetype='text/json')
 
     del tables[table_name]
+
+    lobby.broadcast('table %s dropped' % (table_name))
 
     return Response(
         '{"status": "OK", "message": "table dropped: %s"}' % table_name,

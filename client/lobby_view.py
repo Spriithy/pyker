@@ -90,7 +90,7 @@ def pull_Thread(windowPull, windowUsers, windowTable):
             myTablesOld = myTables
         myTables = []
         """
-        time.sleep(0.1)  #temps en sec
+        time.sleep(1)  #temps en sec
 
 
 def run(stdscr):
