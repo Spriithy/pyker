@@ -9,15 +9,7 @@ import lobby_view
 import signal
 
 
-<<<<<<< HEAD
-it=itc.InterfaceClass
-itc.clear()
-it.standard_Print("Welcome to Pyker BB ")
-user.IDs_= it.set_Addr_Serv(sys.argv[1])
-user.ping_Serv()
-=======
 signal.signal(signal.SIGINT, lambda x, y: (user.quit() and sys.exit(0)))
->>>>>>> curses-client
 
 
 def do(stdsrc, action):
