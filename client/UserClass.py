@@ -5,6 +5,7 @@ class UserClass():
     def __init__(self):
         self.IDs_ = None
         self.last_Message = 0
+        self.stop_threads = False
 
     def whoAmI(self):
         return self.IDs_
@@ -29,8 +30,8 @@ class UserClass():
                 return api.init_Table(message.split()[1])
 
             elif message_splited[0] == message[0] + "q":
-                api.quit()
-                exit("Deconnecté")
+                return api.quit()
+                #exit("Deconnecté")
         return api.push_Message(message, to)["status"] == "OK"
 
     def ping_Serv(self):
@@ -54,6 +55,7 @@ class UserClass():
         return api.get_Tables()["table.list"]
 
     def quit(self):
+        self.stop_threads = True
         return api.quit()
 
 

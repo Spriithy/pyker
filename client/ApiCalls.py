@@ -34,16 +34,19 @@ class ApiCalls(object):
             }).json()
 
     def getUsers(self):
-        return self.session.get("%s/conn/get/users"%self.prefix).json()
-    
-    def init_Table(self,name):
-        return self.session.post("%s/table/init"%self.prefix, data={"table.name":"%s"%name}).json()
-    
+        return self.session.get("%s/conn/get/users" % self.prefix).json()
+
+    def init_Table(self, name):
+        return self.session.post(
+            "%s/table/init" % self.prefix, data={
+                "table.name": "%s" % name
+            }).json()
+
     def get_Tables(self):
-        return self.session.get("%s/table/list"%self.prefix).json()
+        return self.session.get("%s/table/list" % self.prefix).json()
 
     def quit(self):
-        return self.session.get('%s/conn/drop'% self.prefix).json()
+        return self.session.get('%s/conn/drop' % self.prefix).json()
 
 
 instance_Server = ApiCalls()

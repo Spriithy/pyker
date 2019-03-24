@@ -27,6 +27,8 @@ def pull_Thread(windowPull, windowUsers, windowTable):
     windowPull.clear()
     windowTable.clear()
     while (True):
+        if user.stop_threads:
+            break
         for message in user.pull_Message():
             lines.append(fmt_message(message))
         for i in range(len(lines)):
@@ -53,7 +55,7 @@ def pull_Thread(windowPull, windowUsers, windowTable):
         windowTable.border()
         windowTable.addstr(0, 1, "Tables")
         windowTable.refresh()
-        time.sleep(5)  #temps en sec
+        time.sleep(0.1)  #temps en sec
 
 
 def run(stdscr):
@@ -94,14 +96,14 @@ def run(stdscr):
     threadTables_win.getch()
 
     #on run le Thread des pull messages
-    Thread(
+    threadPulling = Thread(
         target=pull_Thread,
         args=(
             thread_Wind,
             threadUSers_win,
             threadTables_win,
-        )).start()
-
+        ))
+    threadPulling.start()
     while True:
         message_Win.addstr(0, 0, get_statusbar(max_x), curses.A_REVERSE)
         message_Win.addstr(1, 0, ">")
