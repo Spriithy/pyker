@@ -27,7 +27,7 @@ class UserClass():
                 if message_splited[0] in ('w', 'whisp', 'whisper'):
                     to = message_splited[1]
                     cut = len(message_splited[0] + message_splited[1]) + 2
-                    message = to + ": " + message[cut:]
+                    message = message[cut:].strip()
 
                 elif message_splited[0] in ('t', 'table'):
                     return api.init_Table(message_splited[1])
