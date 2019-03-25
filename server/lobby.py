@@ -7,20 +7,20 @@ import state
 bp = Blueprint('lobby', __name__, url_prefix='/v0/lobby')
 
 
-def error(message, dest='lobby'):
-    broadcast(message, dest=dest, level='ERROR')
+def error(message, dest='lobby', standalone=False):
+    broadcast(message, dest=dest, level='Error', standalone=standalone)
 
 
-def warning(message, dest='lobby'):
-    broadcast(message, dest=dest, level='WARNING')
+def warning(message, dest='lobby', standalone=False):
+    broadcast(message, dest=dest, level='Warning', standalone=standalone)
 
 
-def broadcast(message, dest='lobby', level='INFO'):
+def broadcast(message, dest='lobby', level='Info', standalone=False):
     messages.append({
         "id": len(messages),
-        "from": level,
+        "from": 'Standalone:' + level if standalone else level,
         "to": dest,
-        "date": datetime.datetime.now().strftime('%H:%M:%S'),
+        "date": datetime.datetime.now().strftime('%H:%M'),
         "content": message,
     })
 
@@ -30,7 +30,7 @@ messages = []
 
 @bp.route('/join')
 def join():
-    broadcast('Welcome on Pyker!', dest=username(session))
+    broadcast('Welcome on Pyker!', dest=username(session), standalone=True)
     return Response('{"status": "OK", "message": ""}')
 
 
@@ -110,9 +110,9 @@ def push_message():
 
     message = {
         "id": len(messages),
-        "from": session['user.name'] + '#' + session['user.id'],
+        "from": username(session),
         "to": request.form.get('message.to', 'lobby'),
-        "date": datetime.datetime.now().strftime('%H:%M:%S'),
+        "date": datetime.datetime.now().strftime('%H:%M'),
         "content": content,
     }
     messages.append(message)
