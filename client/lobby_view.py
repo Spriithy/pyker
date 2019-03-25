@@ -101,7 +101,7 @@ def pull_Thread(windowPull, windowUsers, windowTable):
             windowUsers.border()
             windowUsers.addstr(0, 1, "Connected users")
             loop = windowUsers.getmaxyx()[0] - 3
-            if len(users) < loop:
+            if len(users) <= loop:
                 loop = len(users)
             else:
                 windowUsers.addstr(loop + 1, 1, "...")
@@ -124,7 +124,7 @@ def pull_Thread(windowPull, windowUsers, windowTable):
             windowTable.border()
             windowTable.addstr(0, 1, "Tables")
             loop = windowTable.getmaxyx()[0] - 3
-            if len(tables) < loop:
+            if len(tables) <= loop:
                 loop = len(tables)
             else:
                 windowTable.addstr(loop + 1, 1, "...")
