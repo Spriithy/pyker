@@ -123,7 +123,12 @@ def pull_Thread(windowPull, windowUsers, windowTable):
             windowTable.clear()
             windowTable.border()
             windowTable.addstr(0, 1, "Tables")
-            for i in range(len(tables)):
+            loop = windowTable.getmaxyx()[0] - 3
+            if len(tables) < loop:
+                loop = len(tables)
+            else:
+                windowTable.addstr(loop + 1, 1, "...")
+            for i in range(loop):
                 windowTable.addstr(
                     i + 1, 1, '%s [%s]' % (tables[i]["name"],
                                            str(len(tables[i]["users"]))))
