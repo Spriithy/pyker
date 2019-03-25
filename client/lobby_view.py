@@ -42,8 +42,8 @@ def get_color_for_message(mtype):
         curses.A_NORMAL,
         curses.color_pair(5),
         curses.color_pair(5),
-        curses.color_pair(6),
-        curses.color_pair(4),
+        curses.A_NORMAL,
+        curses.color_pair(3),
         curses.color_pair(1),
     ][mtype]
 
@@ -129,9 +129,13 @@ def pull_Thread(windowPull, windowUsers, windowTable):
             else:
                 windowTable.addstr(loop + 1, 1, "...")
             for i in range(loop):
+                table_name = tables[i]['name']
                 windowTable.addstr(
-                    i + 1, 1, '%s [%s]' % (tables[i]["name"],
-                                           str(len(tables[i]["users"]))))
+                    i + 1, 1, table_name,
+                    curses.color_pair(1)
+                    if table_name == user.getTable() else curses.A_NORMAL)
+                windowTable.addstr(i + 1, 2 + len(table_name),
+                                   '(%d)' % len(tables[i]['users']))
             windowTable.refresh()
             tablesOld = tables
         tables = []
@@ -193,4 +197,8 @@ def run(stdscr):
         text = box.gather().strip()
         if len(text) == 0:
             continue
-        user.push_Message(text)
+
+        if user.push_Message(text) == 'quit':
+            user.quit()
+            threadPulling.join()
+            exit(0)

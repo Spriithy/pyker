@@ -46,8 +46,7 @@ class UserClass():
                     return api.drop_Table(message_splited[1])
 
                 elif message_splited[0] in ('q', 'quit', 'exit'):
-                    api.quit()
-                    exit("Deconnecté")
+                    return 'quit'
             except:
                 pass
 
@@ -72,14 +71,15 @@ class UserClass():
     def getUsers(self):
         return api.getUsers()["user.list"]
 
+    def getTable(self):
+        return api.get_Table()['str']
+
     def getTables(self):
         return api.get_Tables()["table.list"]
 
-    def getMyTable(self):
-        return ""
-
     def quit(self):
         self.stop_threads = True
+        api.leave_Table()
         return api.quit()
 
 
