@@ -21,7 +21,7 @@ def user_table(user):
 def list_tables():
     return Response(
         '{"status": "OK", "message": "", "payload.type": "table.list", "table.list": '
-        + json.dumps(list(filter(lambda t: tables[t], tables))) + '}',
+        + json.dumps(list(map(lambda t: tables[t], tables))) + '}',
         mimetype='text/json')
 
 
