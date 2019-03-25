@@ -11,9 +11,10 @@ class ApiCalls(object):
 
     def set_addr_Serv(self, addr, username):
         if not self.quitted:
-            self.addrServ = addr
-            self.prefix = "http://%s:5000/v0" % addr
-            return self.connection_Init(username)
+            self.addrServ = addr if len(
+                addr.split(':')) == 2 else addr + ":5000"
+            self.prefix = "http://%s/v0" % self.addrServ
+            return (self.connection_Init(username), self.addrServ)
 
     def connection_Init(self, username):
         if not self.quitted:

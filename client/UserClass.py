@@ -6,6 +6,7 @@ class UserClass():
         self.IDs_ = None
         self.last_Message = 0
         self.stop_threads = False
+        self.addrServ = None
 
     def whoAmI(self):
         return self.IDs_
@@ -60,7 +61,7 @@ class UserClass():
         username = username.replace(" ", "")
         if username == "":
             username = "Anonymous"
-        retour_connection = api.set_addr_Serv(address, username)
+        retour_connection, self.addrServ = api.set_addr_Serv(address, username)
         if retour_connection["status"] == "OK":
             self.IDs_ = [
                 retour_connection["user.name"], retour_connection["user.id"]

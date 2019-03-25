@@ -4,7 +4,7 @@ from UserClass import user
 from threading import Thread
 import time
 
-ip = '127.0.0.1:5000'
+ip = ""
 
 FROM_WHISPER = 1
 TO_WHISPER = 2
@@ -151,6 +151,8 @@ def pull_Thread(windowPull, windowUsers, windowTable):
 
 
 def run(stdscr):
+    global ip
+    ip = user.addrServ
     stdscr.clear()
     (max_y, max_x) = stdscr.getmaxyx()
     width_col_usersCo = 30
