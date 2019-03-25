@@ -7,9 +7,14 @@ import login_view
 import lobby_view
 import signal
 
-signal.signal(
-    signal.SIGINT, lambda x, y: ((user.quit()
-                                  if user.IDs_ else True) and sys.exit(0)))
+
+def do_quit(x, y):
+    if user.IDs_:
+        user.quit()
+    sys.exit(0)
+
+
+signal.signal(signal.SIGINT, do_quit)
 
 
 def do(stdsrc, action):

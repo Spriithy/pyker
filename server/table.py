@@ -48,12 +48,12 @@ def init():
 
     if tables.get(table_name, None):
         lobby.broadcast(
-            'Table %s already created' % (table_name),
+            'Table %s already exists' % (table_name),
             dest=username(session),
             level="Error",
             standalone=True)
         return Response(
-            '{"status": "OK", "message": "table already created", "table.name": "%s"}'
+            '{"status": "OK", "message": "table already exists", "table.name": "%s"}'
             % (table_name),
             mimetype='text/json')
 
@@ -118,9 +118,7 @@ def join(table_name):
 
     if not tables.get(table_name, None):
         lobby.error(
-            '%s: This table does not exist.' % table_name,
-            dest=user,
-            standalone=True)
+            'Table %s does not exist' % table_name, dest=user, standalone=True)
         return Response(
             '{"status": "ERROR", "message": "no such table %s"}' % table_name,
             mimetype='text/json')

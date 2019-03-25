@@ -128,14 +128,21 @@ def pull_Thread(windowPull, windowUsers, windowTable):
                 loop = len(tables)
             else:
                 windowTable.addstr(loop + 1, 1, "...")
+            user_table = user.getTable()
+            windowTable_max_x = windowTable.getmaxyx()[1]
             for i in range(loop):
                 table_name = tables[i]['name']
+                if table_name == user_table:
+                    windowTable.addstr(i + 1, 1,
+                                       '>' + ' ' * (windowTable_max_x - 3),
+                                       curses.A_REVERSE)
                 windowTable.addstr(
-                    i + 1, 1, table_name,
-                    curses.color_pair(1)
-                    if table_name == user.getTable() else curses.A_NORMAL)
-                windowTable.addstr(i + 1, 2 + len(table_name),
-                                   '(%d)' % len(tables[i]['users']))
+                    i + 1, 3, table_name, curses.A_REVERSE
+                    if table_name == user_table else curses.A_NORMAL)
+                windowTable.addstr(
+                    i + 1, 4 + len(table_name),
+                    '(%d)' % len(tables[i]['users']), curses.A_REVERSE
+                    if table_name == user_table else curses.A_NORMAL)
             windowTable.refresh()
             tablesOld = tables
         tables = []

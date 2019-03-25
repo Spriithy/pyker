@@ -38,7 +38,9 @@ def init():
 
 @bp.route('/drop')
 def drop():
-    del users[username(session)]
+    user = username(session)
+    if user in users:
+        del users[user]
     session.clear()
     return Response(
         '{"status": "OK", "message": "connection dropped"}',
