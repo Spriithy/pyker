@@ -12,6 +12,11 @@ def username(session):
     return '%s#%s' % (session['user.name'], session['user.id'])
 
 
+@bp.route('ping')
+def ping():
+    return Response()
+
+
 @bp.route('/get/users')
 def get_users():
     return Response(

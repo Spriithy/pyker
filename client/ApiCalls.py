@@ -16,6 +16,10 @@ class ApiCalls(object):
             self.prefix = "http://%s/v0" % self.addrServ
             return (self.connection_Init(username), self.addrServ)
 
+    def ping(self):
+        return requests.get(
+            '%s/conn/ping' % self.prefix).elapsed.total_seconds() / 1000
+
     def connection_Init(self, username):
         if not self.quitted:
             return ((self.session.post(
