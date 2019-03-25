@@ -10,6 +10,9 @@ class UserClass():
     def whoAmI(self):
         return self.IDs_
 
+    def username(self):
+        return '%s#%s' % (self.IDs_[0], self.IDs_[1])
+
     def pull_Message(self):
         if not self.last_Message:
             self.last_Message = api.last_message_id() - 1

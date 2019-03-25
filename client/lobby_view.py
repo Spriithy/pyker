@@ -101,7 +101,12 @@ def pull_Thread(windowPull, windowUsers, windowTable):
             windowUsers.border()
             windowUsers.addstr(0, 1, "Connected users")
             for i in range(len(users)):
-                windowUsers.addstr(i + 1, 1, users[i])
+                if users[i] == user.username():
+                    windowUsers.addstr(i + 1, 1, users[i],
+                                       curses.color_pair(3))
+                else:
+                    windowUsers.addstr(i + 1, 1, users[i])
+
             windowUsers.refresh()
             usersOld = users
         users = []
