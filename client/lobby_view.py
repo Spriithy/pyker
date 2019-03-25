@@ -100,7 +100,12 @@ def pull_Thread(windowPull, windowUsers, windowTable):
             windowUsers.clear()
             windowUsers.border()
             windowUsers.addstr(0, 1, "Connected users")
-            for i in range(len(users)):
+            loop = windowUsers.getmaxyx()[0] - 3
+            if len(users) < loop:
+                loop = len(users)
+            else:
+                windowUsers.addstr(loop + 1, 1, "...")
+            for i in range(loop):
                 if users[i] == user.username():
                     windowUsers.addstr(i + 1, 1, users[i],
                                        curses.color_pair(3))
@@ -118,7 +123,12 @@ def pull_Thread(windowPull, windowUsers, windowTable):
             windowTable.clear()
             windowTable.border()
             windowTable.addstr(0, 1, "Tables")
-            for i in range(len(tables)):
+            loop = windowTable.getmaxyx()[0] - 3
+            if len(tables) < loop:
+                loop = len(tables)
+            else:
+                windowTable.addstr(loop + 1, 1, "...")
+            for i in range(loop):
                 table_name = tables[i]['name']
                 windowTable.addstr(
                     i + 1, 1, table_name,
