@@ -2,7 +2,7 @@ import requests
 import json
 
 
-class ApiCalls(object):
+class PykerServer(object):
     def __init__(self):
         self.session = requests.Session()
         self.addrServ = "0.0.0.0"
@@ -91,4 +91,4 @@ class ApiCalls(object):
         return self.session.get('%s/conn/drop' % self.prefix).json()
 
 
-instance_Server = ApiCalls()
+instance = PykerServer()

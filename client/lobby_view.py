@@ -1,7 +1,7 @@
 import curses
 import curses.textpad as textpad
-from UserClass import user
-from ApiCalls import instance_Server as api
+from server import instance as server
+from proxy import instance as proxy
 from threading import Thread
 import time
 
@@ -52,13 +52,13 @@ def get_color_for_message(mtype):
 def get_statusbar(w):
     pings = []
     for _ in range(10):
-        pings.append(api.ping())
+        pings.append(server.ping())
     ping = '- ms | '
     try:
         ping = '%d ms | ' % (sum(pings) / 10)
     except:
         pass
-    username = 'ID : %s#%s' % (user.IDs_[0], user.IDs_[1])
+    username = 'ID : %s#%s' % (proxy.IDs_[0], proxy.IDs_[1])
     return username + ' ' * (
         w - 2 - len(username) - len(ping) - len(ip)) + ping + ip + ' '
 
@@ -75,11 +75,11 @@ def pull_Thread(windowPull, windowUsers, windowTable, windowMessage):
         windowMessage.addstr(0, 0, get_statusbar(windowMessage.getmaxyx()[1]),
                              curses.A_REVERSE)
         (max_y, max_x) = windowPull.getmaxyx()
-        if user.stop_threads:
+        if proxy.stop_threads:
             break
-        username = '%s#%s' % (user.IDs_[0], user.IDs_[1])
+        username = '%s#%s' % (proxy.IDs_[0], proxy.IDs_[1])
         #reception et affichage des messages
-        messages_pulled = user.pull_Message()
+        messages_pulled = proxy.pull_Message()
         if len(messages_pulled) > 0:
             for message in messages_pulled:
                 message, mtype = fmt_message(message, username)
@@ -106,7 +106,7 @@ def pull_Thread(windowPull, windowUsers, windowTable, windowMessage):
             windowPull.refresh()
 
         #reception et affichage des users connectés
-        for userConnected in user.getUsers():
+        for userConnected in proxy.getUsers():
             users.append(userConnected)
         if users != usersOld:
             windowUsers.clear()
@@ -118,7 +118,7 @@ def pull_Thread(windowPull, windowUsers, windowTable, windowMessage):
             else:
                 windowUsers.addstr(loop + 1, 1, "...")
             for i in range(loop):
-                if users[i] == user.username():
+                if users[i] == proxy.username():
                     windowUsers.addstr(i + 1, 1, users[i],
                                        curses.color_pair(3))
                 else:
@@ -129,7 +129,7 @@ def pull_Thread(windowPull, windowUsers, windowTable, windowMessage):
         users = []
 
         #reception et affichages tables de jeu
-        for tableCreated in user.getTables():
+        for tableCreated in proxy.getTables():
             tables.append(tableCreated)
         if tables != tablesOld:
             windowTable.clear()
@@ -140,7 +140,7 @@ def pull_Thread(windowPull, windowUsers, windowTable, windowMessage):
                 loop = len(tables)
             else:
                 windowTable.addstr(loop + 1, 1, "...")
-            user_table = user.getTable()
+            user_table = proxy.getTable()
             windowTable_max_x = windowTable.getmaxyx()[1]
             for i in range(loop):
                 table_name = tables[i]['name']
@@ -168,7 +168,7 @@ def pull_Thread(windowPull, windowUsers, windowTable, windowMessage):
 
 def run(stdscr):
     global ip
-    ip = user.addrServ
+    ip = proxy.addrServ
     stdscr.clear()
     (max_y, max_x) = stdscr.getmaxyx()
     width_col_usersCo = 30
@@ -224,7 +224,7 @@ def run(stdscr):
         if len(text) == 0:
             continue
 
-        if user.push_Message(text) == 'quit':
-            user.quit()
+        if proxy.push_Message(text) == 'quit':
+            proxy.quit()
             threadPulling.join()
             exit(0)

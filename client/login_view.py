@@ -1,7 +1,7 @@
 import curses
 import sys
-from ApiCalls import instance_Server as api
-from UserClass import user as user
+from server import instance as server
+from proxy import instance as proxy
 
 
 def read_str(stdscr, y, x, n, prompt=''):
@@ -27,7 +27,7 @@ def connection_Lobby(stdscr, max_y, max_x):
     user_name = read_str(stdscr, max_y // 2 + 1,
                          max_x // 2 - len(text) // 2 - 2, len(text), '>')
     try:
-        return user.connection(sys.argv[1], user_name)
+        return proxy.connection(sys.argv[1], user_name)
     except:
         exit("Server connection failed")
 
