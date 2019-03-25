@@ -27,7 +27,7 @@ def connection_Lobby(stdscr, max_y, max_x):
     user_name = read_str(stdscr, max_y // 2 + 1,
                          max_x // 2 - len(text) // 2 - 2, len(text), '>')
     try:
-        return proxy.connection(sys.argv[1], user_name)
+        return proxy.connect(sys.argv[1], user_name)
     except:
         exit("Server connection failed")
 
