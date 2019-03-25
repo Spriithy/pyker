@@ -72,6 +72,9 @@ class UserClass():
     def getTables(self):
         return api.get_Tables()["table.list"]
 
+    def getMyTable(self):
+        return ""
+
     def quit(self):
         self.stop_threads = True
         return api.quit()

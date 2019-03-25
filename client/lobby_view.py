@@ -114,7 +114,7 @@ def pull_Thread(windowPull, windowUsers, windowTable):
             windowTable.border()
             windowTable.addstr(0, 1, "Tables")
             for i in range(len(tables)):
-                windowTable.addstr(i + 1, 1, tables[i])
+                windowTable.addstr(i + 1, 1, '%s' % (tables[i]))
             windowTable.refresh()
             tablesOld = tables
         tables = []
