@@ -17,6 +17,16 @@ def user_table(user):
     return None
 
 
+def drop_user_from_table(table, user):
+    table['users'].remove(user)
+    lobby.broadcast('%s left table %s' % (user, table['name']))
+    if len(table['users']) == 0:
+        del tables[table['name']]
+        lobby.broadcast(
+            'table %s has been automatically removed' % table['name'],
+            standalone=True)
+
+
 @bp.route('/list')
 def list_tables():
     return Response(
@@ -32,7 +42,17 @@ def init():
             '{"status": "ERROR", "message": "user not in lobby"}',
             mimetype='text/json')
 
-    user = '%s#%s' % (session['user.name'], session['user.id'])
+    user = username(session)
+
+    prev_table = user_table(user)
+    if prev_table:
+        drop_user_from_table(prev_table, user)
+        lobby.warning(
+            'You have automatically been removed from table %s' %
+            prev_table['name'],
+            dest=user,
+            standalone=True)
+
     table_id = str(random.randint(0, 1000))
     table_name = request.form.get('table.name', 'table#%s' % table_id)
     tables[table_name] = {
@@ -53,12 +73,13 @@ def init():
 def get():
     if session['state'] is not state.IN_LOBBY:
         return Response(
-            '{"status": "ERROR", "message": "user not in lobby"}',
+            '{"status": "ERROR", "message": "user not in lobby", "payload.type": "str", "str": ""}',
             mimetype='text/json')
     user = username(session)
+    table = user_table(user)
     return Response(
         '{"status": "OK", "message": "", "payload.type": "str", "str": "%s"}' %
-        user_table(user)['name'],
+        table['name'] if table else '',
         mimetype='text/json')
 
 
@@ -70,12 +91,14 @@ def join(table_name):
             mimetype='text/json')
 
     user = username(session)
-
-    if user_table(user):
-        lobby.error('You are already on a table.', dest=user)
-        return Response(
-            '{"status": "ERROR", "message": "user already on a table"}',
-            mimetype='text/json')
+    prev_table = user_table(user)
+    if prev_table:
+        drop_user_from_table(prev_table, user)
+        lobby.warning(
+            'You have automatically been removed from table %s' %
+            prev_table['name'],
+            dest=user,
+            standalone=True)
 
     if not tables.get(table_name, None):
         lobby.error(
@@ -110,8 +133,7 @@ def leave():
             '{"status": "ERROR", "message": "user not on a table"}',
             mimetype='text/json')
 
-    table['users'].remove(user)
-    lobby.broadcast('%s left table %s' % (user, table['name']))
+    drop_user_from_table(table, user)
 
     return Response(
         '{"status": "OK", "message": "user left table: %s"}' % table['name'],
@@ -131,7 +153,7 @@ def drop(table_name):
 
     del tables[table_name]
 
-    lobby.broadcast('table %s dropped' % (table_name))
+    lobby.broadcast('table %s has been dropped' % table_name, standalone=True)
 
     return Response(
         '{"status": "OK", "message": "table dropped: %s"}' % table_name,
