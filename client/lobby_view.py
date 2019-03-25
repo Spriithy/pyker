@@ -100,7 +100,12 @@ def pull_Thread(windowPull, windowUsers, windowTable):
             windowUsers.clear()
             windowUsers.border()
             windowUsers.addstr(0, 1, "Connected users")
-            for i in range(len(users)):
+            loop = windowUsers.getmaxyx()[0] - 3
+            if len(users) < loop:
+                loop = len(users)
+            else:
+                windowUsers.addstr(loop + 1, 1, "...")
+            for i in range(loop):
                 if users[i] == user.username():
                     windowUsers.addstr(i + 1, 1, users[i],
                                        curses.color_pair(3))
