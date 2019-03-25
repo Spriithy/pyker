@@ -19,7 +19,7 @@ class ApiCalls(object):
     def ping(self):
         if not self.quitted:
             return requests.get(
-                '%s/conn/ping' % self.prefix).elapsed.total_seconds() / 1000
+                '%s/conn/ping' % self.prefix).elapsed.total_seconds() * 1000
 
     def connection_Init(self, username):
         if not self.quitted:

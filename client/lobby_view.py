@@ -5,7 +5,7 @@ from ApiCalls import instance_Server as api
 from threading import Thread
 import time
 
-ip = ""
+ip = ''
 
 FROM_WHISPER = 1
 TO_WHISPER = 2
@@ -53,7 +53,11 @@ def get_statusbar(w):
     pings = []
     for _ in range(10):
         pings.append(api.ping())
-    ping = '%d ms | ' % (sum(pings) / 10)
+    ping = '- ms | '
+    try:
+        ping = '%d ms | ' % (sum(pings) / 10)
+    except:
+        pass
     username = 'ID : %s#%s' % (user.IDs_[0], user.IDs_[1])
     return username + ' ' * (
         w - 2 - len(username) - len(ping) - len(ip)) + ping + ip + ' '
@@ -142,18 +146,22 @@ def pull_Thread(windowPull, windowUsers, windowTable, windowMessage):
                 table_name = tables[i]['name']
                 if table_name == user_table:
                     windowTable.addstr(i + 1, 1,
-                                       '>' + ' ' * (windowTable_max_x - 3),
+                                       '[*]' + ' ' * (windowTable_max_x - 5),
                                        curses.A_REVERSE)
                 windowTable.addstr(
-                    i + 1, 3, table_name, curses.A_REVERSE
+                    i + 1, 5, table_name, curses.A_REVERSE
                     if table_name == user_table else curses.A_NORMAL)
                 windowTable.addstr(
-                    i + 1, 4 + len(table_name),
+                    i + 1, 6 + len(table_name),
                     '(%d)' % len(tables[i]['users']), curses.A_REVERSE
                     if table_name == user_table else curses.A_NORMAL)
             windowTable.refresh()
             tablesOld = tables
         tables = []
+
+        windowMessage.addstr(0, 0, get_statusbar(windowMessage.getmaxyx()[1]),
+                             curses.A_REVERSE)
+        windowMessage.refresh()
 
         time.sleep(1)  #temps en sec
 
