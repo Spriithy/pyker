@@ -43,6 +43,19 @@ def init():
             mimetype='text/json')
 
     user = username(session)
+    table_id = str(random.randint(0, 1000))
+    table_name = request.form.get('table.name', 'table#%s' % table_id)
+
+    if tables.get(table_name, None):
+        lobby.broadcast(
+            'Table %s already created' % (table_name),
+            dest=username(session),
+            level="Error",
+            standalone=True)
+        return Response(
+            '{"status": "OK", "message": "table already created", "table.name": "%s"}'
+            % (table_name),
+            mimetype='text/json')
 
     prev_table = user_table(user)
     if prev_table:
@@ -53,8 +66,6 @@ def init():
             dest=user,
             standalone=True)
 
-    table_id = str(random.randint(0, 1000))
-    table_name = request.form.get('table.name', 'table#%s' % table_id)
     tables[table_name] = {
         "name": table_name,
         "id": table_id,
@@ -77,10 +88,15 @@ def get():
             mimetype='text/json')
     user = username(session)
     table = user_table(user)
-    return Response(
-        '{"status": "OK", "message": "", "payload.type": "str", "str": "%s"}' %
-        table['name'] if table else '',
-        mimetype='text/json')
+    if table:
+        return Response(
+            '{"status": "OK", "message": "", "payload.type": "str", "str": "%s"}'
+            % table['name'],
+            mimetype='text/json')
+    else:
+        return Response(
+            '{"status": "OK", "message": "user not in table", "payload.type": "str", "str": ""}',
+            mimetype='text/json')
 
 
 @bp.route('/join/<table_name>')
