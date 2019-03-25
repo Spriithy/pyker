@@ -65,7 +65,10 @@ def join(table_name):
             mimetype='text/json')
 
     if not tables.get(table_name, None):
-        lobby.error('%s: This table does not exist.' % table_name, dest=user)
+        lobby.error(
+            '%s: This table does not exist.' % table_name,
+            dest=user,
+            standalone=True)
         return Response(
             '{"status": "ERROR", "message": "no such table %s"}' % table_name,
             mimetype='text/json')
@@ -89,7 +92,7 @@ def leave():
     table = user_table(user)
 
     if not table:
-        lobby.error('You are not on a table.', dest=user)
+        lobby.error('You are not on a table.', dest=user, standalone=True)
         return Response(
             '{"status": "ERROR", "message": "user not on a table"}',
             mimetype='text/json')
@@ -106,7 +109,9 @@ def leave():
 def drop(table_name):
     if not tables.get(table_name, None):
         lobby.error(
-            '%s: Table does not exist.' % table_name, dest=username(session))
+            '%s: Table does not exist.' % table_name,
+            dest=username(session),
+            standalone=True)
         return Response(
             '{"status": "ERROR", "message": "table does not exist"}',
             mimetype='text/json')

@@ -15,8 +15,8 @@ SERVER_ERROR = 5
 
 def fmt_message(message, user):
     if message['to'] == user and '#' in message['from']:
-        return '[%s][%s]: said: %s' % (message['date'], message['from'],
-                                       message['content']), FROM_WHISPER
+        return '[%s][%s] said: %s' % (message['date'], message['from'],
+                                      message['content']), FROM_WHISPER
 
     if message['from'] == user and message['to'] != 'lobby':
         return '[%s][%s]: %s' % (message['date'], message['to'],
@@ -119,7 +119,7 @@ def pull_Thread(windowPull, windowUsers, windowTable):
             tablesOld = tables
         tables = []
 
-        time.sleep(0.1)  #temps en sec
+        time.sleep(1)  #temps en sec
 
 
 def run(stdscr):

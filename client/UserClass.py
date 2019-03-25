@@ -14,8 +14,7 @@ class UserClass():
         if not self.last_Message:
             self.last_Message = api.last_message_id() - 1
         messages_Pulled = api.pull_Messages(self.last_Message)
-        self.last_Message = self.last_Message + len(
-            messages_Pulled["lobby.messages"])
+        self.last_Message = api.last_message_id()
         return messages_Pulled["lobby.messages"]
 
     def push_Message(self, message, to='lobby'):
@@ -28,6 +27,8 @@ class UserClass():
                     to = message_splited[1]
                     cut = len(message_splited[0] + message_splited[1]) + 2
                     message = message[cut:].strip()
+                    if len(message.strip()) == 0:
+                        return
 
                 elif message_splited[0] in ('t', 'table'):
                     return api.init_Table(message_splited[1])
