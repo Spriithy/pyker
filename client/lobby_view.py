@@ -1,6 +1,7 @@
 import curses
 import curses.textpad as textpad
 from UserClass import user
+from ApiCalls import instance_Server as api
 from threading import Thread
 import time
 
@@ -49,11 +50,16 @@ def get_color_for_message(mtype):
 
 
 def get_statusbar(w):
-    id_str = 'ID : %s#%s' % (user.IDs_[0], user.IDs_[1])
-    return id_str + ' ' * (w - 1 - len(ip) - len(id_str)) + ip
+    pings = []
+    for _ in range(10):
+        pings.append(api.ping())
+    ping = '%d ms | ' % (sum(pings) / 10)
+    username = 'ID : %s#%s' % (user.IDs_[0], user.IDs_[1])
+    return username + ' ' * (
+        w - 2 - len(username) - len(ping) - len(ip)) + ping + ip + ' '
 
 
-def pull_Thread(windowPull, windowUsers, windowTable):
+def pull_Thread(windowPull, windowUsers, windowTable, windowMessage):
     users = []
     usersOld = []
     tables = []
@@ -62,6 +68,8 @@ def pull_Thread(windowPull, windowUsers, windowTable):
     windowPull.clear()
 
     while True:
+        windowMessage.addstr(0, 0, get_statusbar(windowMessage.getmaxyx()[1]),
+                             curses.A_REVERSE)
         (max_y, max_x) = windowPull.getmaxyx()
         if user.stop_threads:
             break
@@ -192,6 +200,7 @@ def run(stdscr):
             thread_Wind,
             threadUSers_win,
             threadTables_win,
+            message_Win,
         ))
     threadPulling.start()
     while True:
