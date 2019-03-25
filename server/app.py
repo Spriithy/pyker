@@ -1,10 +1,11 @@
 from flask import Flask
 import os
-import conn, state, lobby, table
+import conn, state, lobby, room, morpion
 
 app = Flask(__name__)
 app.secret_key = b'q\xc1\x8f\xaf\xb2\tT\x07I\xc7%\x96\xbf\xffJ\x15'
 app.register_blueprint(conn.bp)
 app.register_blueprint(state.bp)
 app.register_blueprint(lobby.bp)
-app.register_blueprint(table.bp)
+app.register_blueprint(room.bp)
+app.register_blueprint(morpion.bp)

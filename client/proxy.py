@@ -28,17 +28,17 @@ class PykerProxy(object):
                     if len(message.strip()) == 0:
                         return
 
-                elif message_parts[0] in ('t', 'table'):
-                    return server.init_table(message_parts[1])
+                elif message_parts[0] in ('t', 'room'):
+                    return server.init_room(message_parts[1])
 
                 elif message_parts[0] in ('j', 'join'):
-                    return server.join_table(message_parts[1])
+                    return server.join_room(message_parts[1])
 
                 elif message_parts[0] in ('l', 'leave'):
-                    return server.leave_table()
+                    return server.leave_room()
 
                 elif message_parts[0] in ('d', 'drop'):
-                    return server.drop_table(message_parts[1])
+                    return server.drop_room(message_parts[1])
 
                 elif message_parts[0] in ('q', 'quit', 'exit'):
                     return 'quit'
@@ -65,15 +65,15 @@ class PykerProxy(object):
     def get_users(self):
         return server.get_users()['user.list']
 
-    def get_user_table(self):
-        return server.get_user_table()['str']
+    def get_user_room(self):
+        return server.get_user_room()['str']
 
-    def get_tables(self):
-        return server.get_tables()['table.list']
+    def get_rooms(self):
+        return server.get_rooms()['room.list']
 
     def quit(self):
         self.stop_threads = True
-        server.leave_table()
+        server.leave_room()
         return server.quit()
 
 

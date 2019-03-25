@@ -60,33 +60,32 @@ class PykerServer(object):
         if not self.quitted:
             return self.session.get("%s/conn/get/users" % self.prefix).json()
 
-    def init_table(self, name):
+    def init_room(self, name):
         if not self.quitted:
             return self.session.post(
-                "%s/table/init" % self.prefix,
-                data={
-                    "table.name": "%s" % name
+                "%s/room/init" % self.prefix, data={
+                    "room.name": "%s" % name
                 }).json()
 
-    def get_user_table(self):
+    def get_user_room(self):
         if not self.quitted:
-            return self.session.get("%s/table/get" % self.prefix).json()
+            return self.session.get("%s/room/get" % self.prefix).json()
 
-    def get_tables(self):
+    def get_rooms(self):
         if not self.quitted:
-            return self.session.get("%s/table/list" % self.prefix).json()
+            return self.session.get("%s/room/list" % self.prefix).json()
 
-    def join_table(self, name):
+    def join_room(self, name):
         if not self.quitted:
-            return self.session.get("%s/table/join/%s" % (self.prefix, name))
+            return self.session.get("%s/room/join/%s" % (self.prefix, name))
 
-    def leave_table(self):
+    def leave_room(self):
         if not self.quitted:
-            return self.session.get("%s/table/leave" % self.prefix)
+            return self.session.get("%s/room/leave" % self.prefix)
 
-    def drop_table(self, name):
+    def drop_room(self, name):
         if not self.quitted:
-            return self.session.get("%s/table/drop/%s" % (self.prefix, name))
+            return self.session.get("%s/room/drop/%s" % (self.prefix, name))
 
     def quit(self):
         self.quitted = True
