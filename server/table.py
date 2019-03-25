@@ -21,7 +21,7 @@ def user_table(user):
 def list_tables():
     return Response(
         '{"status": "OK", "message": "", "payload.type": "table.list", "table.list": '
-        + json.dumps(list(filter(lambda t: tables[t]['name'], tables))) + '}',
+        + json.dumps(list(filter(lambda t: tables[t], tables))) + '}',
         mimetype='text/json')
 
 
@@ -46,6 +46,19 @@ def init():
     return Response(
         '{"status": "OK", "message": "table created", "table.name": "%s", "table.id": "%s"}'
         % (table_name, table_id),
+        mimetype='text/json')
+
+
+@bp.route('/get')
+def get():
+    if session['state'] is not state.IN_LOBBY:
+        return Response(
+            '{"status": "ERROR", "message": "user not in lobby"}',
+            mimetype='text/json')
+    user = username(session)
+    return Response(
+        '{"status": "OK", "message": "", "payload.type": "str", "str": "%s"}' %
+        user_table(user)['name'],
         mimetype='text/json')
 
 
