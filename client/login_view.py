@@ -17,12 +17,13 @@ def connection_Lobby(stdscr, max_y, max_x):
     stdscr.clear()
     for i in range(len(pyker)):
         stdscr.addstr(max_y // 6 + i, max_x // 2 - len(pyker[i]) // 2,
-                      pyker[i])
+                      pyker[i], curses.color_pair(248))
     stdscr.addstr
     text = 'Type in your username'
     stdscr.addstr(max_y // 2, max_x // 2 - len(text) // 2, text, curses.A_BOLD)
     credit = '@Spriithy & @ErnestBidouille'
-    stdscr.addstr(max_y - 4, max_x // 2 - len(credit) // 2, credit)
+    stdscr.addstr(max_y - 4, max_x // 2 - len(credit) // 2, credit,
+                  curses.color_pair(6))
     user_name = read_str(stdscr, max_y // 2 + 1,
                          max_x // 2 - len(text) // 2 - 2, len(text), '>')
     try:
@@ -32,7 +33,7 @@ def connection_Lobby(stdscr, max_y, max_x):
 
 
 pyker = [
-    '██████╗ ██╗   ██╗██╗  ██╗███████╗██████╗',
+    '██████╗ ██╗   ██╗██╗  ██╗███████╗██████╗ ',
     '██╔══██╗╚██╗ ██╔╝██║ ██╔╝██╔════╝██╔══██╗',
     '██████╔╝ ╚████╔╝ █████╔╝ █████╗  ██████╔╝',
     '██╔═══╝   ╚██╔╝  ██╔═██╗ ██╔══╝  ██╔══██╗',

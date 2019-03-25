@@ -15,28 +15,36 @@ SERVER_ERROR = 5
 
 def fmt_message(message, user):
     if message['to'] == user and '#' in message['from']:
-        return '%s [%s] said: %s' % (message['date'], message['from'],
-                                     message['content']), FROM_WHISPER
+        return '[%s][%s]: said: %s' % (message['date'], message['from'],
+                                       message['content']), FROM_WHISPER
 
     if message['from'] == user and message['to'] != 'lobby':
-        return '%s [%s]: %s' % (message['date'], message['to'],
-                                message['content']), TO_WHISPER
+        return '[%s][%s]: %s' % (message['date'], message['to'],
+                                 message['content']), TO_WHISPER
 
-    return '%s <%s> %s' % (message['date'], message['from'],
-                           message['content']), {
-                               'INFO': SERVER_INFO,
-                               'WARNING': SERVER_WARNING,
-                               'ERROR': SERVER_ERROR,
-                           }.get(message['from'], curses.A_NORMAL)
+    msg = None
+    from_ = message['from']
+    if from_.split(':')[0] == 'Standalone':
+        msg = '[%s] %s' % (message['date'], message['content'])
+        from_ = from_.split(':')[1]
+    else:
+        msg = '[%s][%s]: %s' % (message['date'], from_, message['content'])
+
+    return msg, {
+        'Info': SERVER_INFO,
+        'Warning': SERVER_WARNING,
+        'Error': SERVER_ERROR,
+    }.get(from_, curses.A_NORMAL)
 
 
 def get_color_for_message(mtype):
     return [
         curses.A_NORMAL,
         curses.color_pair(5),
-        curses.color_pair(5), curses.A_NORMAL,
+        curses.color_pair(5),
+        curses.color_pair(6),
         curses.color_pair(4),
-        curses.color_pair(1)
+        curses.color_pair(1),
     ][mtype]
 
 
