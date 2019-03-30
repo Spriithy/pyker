@@ -42,6 +42,7 @@ class PykerProxy(object):
 
                 elif message_parts[0] in ('q', 'quit', 'exit'):
                     return 'quit'
+
             except:
                 pass
 
