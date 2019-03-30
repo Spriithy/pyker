@@ -11,6 +11,8 @@ SERVER_INFO = 3
 SERVER_WARNING = 4
 SERVER_ERROR = 5
 
+lines = []
+
 
 def get_message_format(message, user):
     if message['to'] == user and '#' in message['from']:
@@ -62,6 +64,8 @@ def get_statusbar(width):
 
 
 def pull(chat_win, users_win, tables_win, statusbar_win):
+
+    global lines
     users = []
     prev_users = []
     tables = []
@@ -218,8 +222,13 @@ def run(stdscr):
         text = box.gather().strip()
         if len(text) == 0:
             continue
-
-        if proxy.push_message(text) == 'quit':
+        message = proxy.push_message(text)
+        if message == 'quit':
             proxy.quit()
             pull_thread.join()
             exit(0)
+        elif message == 'clear':
+            global lines
+            lines = []
+            chat_win.clear()
+            chat_win.refresh()

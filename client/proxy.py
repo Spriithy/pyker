@@ -42,6 +42,11 @@ class PykerProxy(object):
 
                 elif message_parts[0] in ('q', 'quit', 'exit'):
                     return 'quit'
+
+                elif message_parts[0] in ('c', 'clear'):
+                    self.last_message_id = server.last_message_id()
+                    return "clear"
+
             except:
                 pass
 
