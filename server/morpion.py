@@ -1,11 +1,11 @@
 from flask import *
-from conn import username
 from response import *
 import json
 import random
 import lobby
 import state
 from room import *
+from helpers import username
 
 bp = Blueprint('morpion', __name__, url_prefix='/morpion')
 
@@ -24,5 +24,11 @@ def start():
             lobby.warning('Too many players to start a Tac Tac Toe game')
             return Response(
                 error('too many players in room'), mimetype='text/json')
+
+    return Response(ok())
+
+
+@bp.route('/join')
+def join_morpion():
 
     return Response(ok())

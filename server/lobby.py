@@ -1,8 +1,8 @@
 from flask import *
 import json
-from conn import username
 import datetime
 import state
+from helpers import username
 
 bp = Blueprint('lobby', __name__, url_prefix='/v0/lobby')
 
@@ -63,7 +63,7 @@ def pull_messages():
     start = 0
     if request.args.get('start', None):
         start = int(request.args.get('start'))
-    user = session['user.name'] + '#' + session['user.id']
+    user = username(session)
     local_messages = list(
         filter(
             lambda m: m['from'] == user or m['to'] == 'lobby' or m['to'] ==

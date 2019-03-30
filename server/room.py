@@ -1,5 +1,5 @@
 from flask import *
-from conn import username
+from helpers import username
 import json
 import random
 import lobby
