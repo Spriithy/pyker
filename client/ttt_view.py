@@ -17,7 +17,7 @@ def get_statusbar(width):
     global username
     global ping
     return username + versus + contestant + score + ' ' * (
-        width - 2 - len(username) - len(versus) - len(contestant) - len(score)
+        width - 1 - len(username) - len(versus) - len(contestant) - len(score)
         - len(ping) - len(ip)) + ping + ip + ' '
 
     # pings = []
@@ -45,7 +45,7 @@ def run(stdscr):
     mainWin.refresh()
 
     statusWin = curses.newwin(2, max_x)
-    statusWin.addstr(0, 0, 'X' * max_x)
+    statusWin.addstr(0, 0, '' * max_x)
     statusWin.refresh()
     pullStatsThread = Thread(target=pullStats, args=(statusWin, ))
     pullStatsThread.start()

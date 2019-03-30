@@ -58,7 +58,7 @@ def get_statusbar(width):
         pass
     username = 'ID : %s' % proxy.username
     return username + ' ' * (
-        width - 2 - len(username) - len(ping) - len(ip)) + ping + ip + ' '
+        width - 1 - len(username) - len(ping) - len(ip)) + ping + ip + ' '
 
 
 def pull(chat_win, users_win, rooms_win, statusbar_win):
