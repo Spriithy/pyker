@@ -1,6 +1,6 @@
 from flask import *
 import json
-from conn import username
+from helpers import username
 import datetime
 import state
 
@@ -30,7 +30,7 @@ messages = []
 
 @bp.route('/join')
 def join():
-    broadcast('Welcome on Pyker!', dest=username(session), standalone=True)
+    broadcast('%s logged in' % username(session), standalone=True)
     return Response('{"status": "OK", "message": ""}')
 
 

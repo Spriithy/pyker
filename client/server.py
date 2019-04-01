@@ -18,7 +18,7 @@ class PykerServer(object):
 
     def ping(self):
         if not self.quitted:
-            return requests.get(
+            return self.session.get(
                 '%s/conn/ping' % self.prefix).elapsed.total_seconds() * 1000
 
     def connection_init(self, username):
