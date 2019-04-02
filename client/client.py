@@ -6,7 +6,7 @@ from curses import wrapper
 import login_view
 import lobby_view
 import signal
-
+import ttt_view
 
 def do_quit(x, y):
     if proxy.username:
@@ -18,10 +18,11 @@ signal.signal(signal.SIGINT, do_quit)
 
 
 def do(stdsrc, action):
+    curses.curs_set(0)
     if action == 'lobby.join':
         server.join_lobby()
-        lobby_view.run(stdsrc)
-
+        ttt_view.run(stdsrc)
+	#lobby_view.run(stdsrc)
 
 @curses.wrapper
 def main(stdscr):
