@@ -164,7 +164,7 @@ def pull(chat_win, users_win, tables_win, statusbar_win):
         statusbar_win.addstr(0, 0, get_statusbar(statusbar_win.getmaxyx()[1]),
                              curses.A_REVERSE)
         statusbar_win.refresh()
-        time.sleep(0.1)
+        time.sleep(0.2)
 
 
 def run(stdscr):
